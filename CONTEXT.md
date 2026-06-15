@@ -9,7 +9,7 @@ A person in or interested in a California area who seeks quality coffee roasters
 _Avoid_: User, consumer, buyer
 
 **Coffee Roaster**:
-An independent California business that roasts coffee and can be discovered by people looking for quality local coffee.
+An own-brand coffee roasting business with California relevance that can be discovered by people looking for quality local coffee.
 _Avoid_: Cafe, shop, vendor
 
 **Roast Quality**:
@@ -60,6 +60,42 @@ _Avoid_: Microsite, business dashboard
 A physical place associated with a **Coffee Roaster** that a **Local Coffee Lover** may visit.
 _Avoid_: Coffee Roaster, cafe profile
 
+**California Relevance**:
+A **Coffee Roaster**'s meaningful connection to California through roasting, public locations, origin, or coffee culture.
+_Avoid_: Ships to California
+
+**Launch Area**:
+An **Area** intentionally included in the initial product because it can support useful **Area Discovery**.
+_Avoid_: Complete coverage, every city
+
+**Curated Roaster Data**:
+Roaster information intentionally gathered and maintained for the product's discovery experience.
+_Avoid_: Scraped listings, open submissions
+
+**Public Signal**:
+A visible fact or observation that explains why a **Coffee Roaster** may be relevant to a **Local Coffee Lover**.
+_Avoid_: Internal note, claim, score
+
+**Suggestion**:
+A proposed correction or missing **Coffee Roaster** submitted for review before it changes **Curated Roaster Data**.
+_Avoid_: Edit, wiki contribution
+
+**Claimed Profile**:
+A **Roaster Profile** managed directly by its associated **Coffee Roaster**.
+_Avoid_: Suggestion, correction
+
+**Visit Photo**:
+A private photo attached to a **Visit** to help a **Local Coffee Lover** remember the in-person experience.
+_Avoid_: Public gallery photo, roaster profile image
+
+**Photo Caption**:
+Optional text attached to a **Visit Photo** to describe what the photo helps the **Local Coffee Lover** remember.
+_Avoid_: Review, tasting note
+
+**Visit Cover Photo**:
+The **Visit Photo** used to visually represent a **Visit** in the **Journal**.
+_Avoid_: Roaster profile image
+
 ## Relationships
 
 - A **Local Coffee Lover** discovers one or more **Coffee Roasters**
@@ -77,6 +113,16 @@ _Avoid_: Coffee Roaster, cafe profile
 - A **Visit** belongs to one **Local Coffee Lover** and one **Coffee Roaster**
 - A **Visit** may reference one **Roaster Location**
 - A **Visit** has one **Visit Date**
+- A **Visit** may have zero or more **Visit Photos**
+- A **Visit Photo** may have one **Photo Caption**
+- A **Visit** may have one **Visit Cover Photo**
+- A **Coffee Roaster** must have **California Relevance**
+- A **Launch Area** is an **Area**
+- **Curated Roaster Data** describes **Coffee Roasters**, **Areas**, and **Roaster Locations**
+- A **Roast Quality Signal** may be a **Public Signal**
+- A **Local Coffee Lover** may submit a **Suggestion**
+- A **Suggestion** may update **Curated Roaster Data** only after review
+- A **Claimed Profile** is a future form of **Roaster Profile**
 
 ## Example dialogue
 
@@ -110,3 +156,23 @@ _Avoid_: Coffee Roaster, cafe profile
 - A **Roaster Preview** may lead to a **Roaster Profile**.
 - A **Roaster Profile** may support recording a **Visit**.
 - **Coffee Roaster** and **Roaster Location** are distinct; one roaster may have multiple physical locations.
+- A **Coffee Roaster** does not need a public **Roaster Location** to belong in the product.
+- An in-person **Visit** requires a **Roaster Location**.
+- A non-roasting cafe is not a **Coffee Roaster**, even if it serves high-quality coffee.
+- Corporate ownership does not disqualify a **Coffee Roaster** if it still roasts coffee under its own brand and is California-relevant.
+- "Independent" was rejected as a strict inclusion rule; own-brand roasting and California relevance matter more than ownership structure.
+- **California Relevance** includes California roasting, public California locations, or meaningful California origin; shipping to California alone is not enough.
+- Initial coverage should use selected **Launch Areas** rather than every California city.
+- Initial **Coffee Roaster** information should come from **Curated Roaster Data**, not scraping or open submissions.
+- Public **Roaster Profiles** should show lightweight **Public Signals** while keeping source and verification notes internal.
+- Local Coffee Lovers may submit **Suggestions**, but public data should not change without review.
+- **Claimed Profile** management should wait; roaster corrections should initially use reviewed **Suggestions**.
+- **Visit Photos** should be private and attached to **Visits** for v1.
+- **Visit Photos** are for personal memory, not visit proof or **Roast Quality** evaluation.
+- **Visit Photos** are optional for a **Visit**.
+- A **Visit** may include multiple **Visit Photos**.
+- **Photo Captions** are optional and attached to individual **Visit Photos**.
+- Hidden location metadata from **Visit Photos** should not be preserved or used.
+- **Visit Photos** may be added, deleted, and captioned after upload; image editing is outside v1.
+- A **Visit Cover Photo** may represent a **Visit** in the **Journal** when photos exist.
+- **Visit Photos** should not have public sharing or publishing in v1.
