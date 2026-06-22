@@ -14,7 +14,7 @@ Build an initial California-focused web product centered on Area Discovery, Coff
 
 Public Discovery should let anyone start with a named California Area, browse an Area Roaster List, inspect Roaster Previews, and open Roaster Profiles that explain why each Coffee Roaster may be worth attention. The product should use evidence-based Public Signals and Roast Quality Signals instead of public ratings, rankings, or reviews.
 
-The Journal should let signed-in Local Coffee Lovers record repeatable in-person Visits to Coffee Roasters. A Visit should require only a Coffee Roaster and Visit Date, while supporting optional Roaster Location, notes, personal impressions, Visit Photos, Photo Captions, and a Visit Cover Photo. Visit Photos should be private, memory-oriented, optional, and unavailable for public sharing or publishing in v1.
+The Journal should let signed-in Local Coffee Lovers record repeatable in-person Visits to Coffee Roasters. A Visit should require a Coffee Roaster, Roaster Location, and Visit Date, while supporting optional notes, personal impressions, Visit Photos, Photo Captions, and a Visit Cover Photo. Visit Photos should be private, memory-oriented, optional, and unavailable for public sharing or publishing in v1.
 
 Curated Roaster Data should seed the initial discovery experience. Local Coffee Lovers and roasters may submit Suggestions for corrections or missing Coffee Roasters, but public data should only change after review. Claimed Profile management, public reviews, monetization, marketplace checkout, and roaster dashboards are out of scope for v1.
 
@@ -42,9 +42,9 @@ Curated Roaster Data should seed the initial discovery experience. Local Coffee 
 20. As a Local Coffee Lover, I want Public Discovery to work without sign-in, so that I can evaluate the product before creating an account.
 21. As a Local Coffee Lover, I want to create a Journal only when I want to save private Visits, so that discovery remains low-friction.
 22. As a signed-in Local Coffee Lover, I want to add a Visit from a Roaster Profile, so that I can record an in-person experience while the roaster context is fresh.
-23. As a signed-in Local Coffee Lover, I want a Visit to require only a Coffee Roaster and Visit Date, so that recording a memory is fast.
+23. As a signed-in Local Coffee Lover, I want a Visit to require only a Coffee Roaster, Roaster Location, and Visit Date, so that recording a memory is fast while preserving where the experience occurred.
 24. As a signed-in Local Coffee Lover, I want the Visit Date to default sensibly, so that same-day entries require minimal effort.
-25. As a signed-in Local Coffee Lover, I want to optionally attach a Roaster Location to a Visit, so that I can remember which physical place I visited.
+25. As a signed-in Local Coffee Lover, I want to select a Roaster Location for a Visit, so that every in-person memory records which physical place I visited.
 26. As a signed-in Local Coffee Lover, I want to record multiple Visits to the same Coffee Roaster, so that repeat experiences are preserved separately.
 27. As a signed-in Local Coffee Lover, I want to record Visits across multiple Areas, so that my Journal reflects my coffee travel over time.
 28. As a signed-in Local Coffee Lover, I want to add personal notes to a Visit, so that I can remember what stood out.
@@ -100,13 +100,14 @@ Curated Roaster Data should seed the initial discovery experience. Local Coffee 
 - Seed discovery with Curated Roaster Data rather than scraped listings or open community edits.
 - Allow Suggestions for missing Coffee Roasters and profile corrections.
 - Require review before any Suggestion changes public Curated Roaster Data.
+- Provide a private admin interface for maintainers to manage Curated Roaster Data and review Suggestions.
 - Defer Claimed Profile management; roaster representatives use the same Suggestion flow in v1.
 - Make Public Discovery available without sign-in.
 - Require sign-in for Journal persistence.
 - Model a Journal as a private collection of Visits.
 - Model a Visit as a repeatable in-person experience tied to one Local Coffee Lover and one Coffee Roaster.
-- Require only Coffee Roaster and Visit Date for a meaningful Visit.
-- Allow optional Roaster Location, notes, personal impression, and Visit Photos on a Visit.
+- Require Coffee Roaster, Roaster Location, and Visit Date for a meaningful Visit.
+- Allow optional notes, personal impression, and Visit Photos on a Visit.
 - Keep Visit notes and impressions private; do not turn them into public reviews.
 - Attach Visit Photos to Visits only; do not use them as public roaster/profile imagery.
 - Allow multiple optional Visit Photos per Visit.
@@ -125,9 +126,9 @@ Curated Roaster Data should seed the initial discovery experience. Local Coffee 
 - Area Discovery tests should verify that Areas are named discovery areas and that Area pages are list-first rather than map-first or ranking-first.
 - Roaster Profile tests should verify that Roaster Profiles show decision/action/memory information, not business dashboard features.
 - Journal tests should verify that sign-in is required to create and view private Visits, while Public Discovery remains open.
-- Visit tests should verify that Coffee Roaster and Visit Date are sufficient to create a Visit.
+- Visit tests should verify that Coffee Roaster, Roaster Location, and Visit Date are required to create a Visit.
 - Repeat Visit tests should verify that the same Local Coffee Lover can record multiple Visits for the same Coffee Roaster.
-- Roaster Location tests should verify that a Visit may reference a Roaster Location, and that in-person Visit flows do not require every Coffee Roaster to have a public Roaster Location.
+- Roaster Location tests should verify that a Visit must reference a Roaster Location belonging to its Coffee Roaster, while discovery does not require every Coffee Roaster to have a public Roaster Location.
 - Privacy tests should verify that Visits, notes, impressions, and Visit Photos are visible only to the owning Local Coffee Lover.
 - Visit Photo tests should verify that photos are optional, multiple photos can attach to one Visit, captions are optional, and a cover photo can represent the Visit in the Journal.
 - Metadata tests should verify that hidden location metadata from Visit Photos is not preserved or used.

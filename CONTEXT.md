@@ -25,7 +25,7 @@ A California place used by a **Local Coffee Lover** to discover nearby **Coffee 
 _Avoid_: Market, territory, radius
 
 **Visit**:
-A journal entry recording a **Local Coffee Lover**'s in-person experience with a **Coffee Roaster** at a point in time.
+A journal entry recording a **Local Coffee Lover**'s in-person experience with a **Coffee Roaster** at a **Roaster Location** and a point in time.
 _Avoid_: Check-in, visited flag
 
 **Visit Date**:
@@ -111,7 +111,7 @@ _Avoid_: Roaster profile image
 - A **Coffee Roaster** has **Roast Quality**
 - A **Roast Quality Signal** supports judgment of **Roast Quality**
 - A **Visit** belongs to one **Local Coffee Lover** and one **Coffee Roaster**
-- A **Visit** may reference one **Roaster Location**
+- A **Visit** references one **Roaster Location**
 - A **Visit** has one **Visit Date**
 - A **Visit** may have zero or more **Visit Photos**
 - A **Visit Photo** may have one **Photo Caption**
@@ -147,7 +147,7 @@ _Avoid_: Roaster profile image
 - **Area** was resolved as a named California discovery area, not a strict distance radius.
 - "Track the places I've been" was resolved as repeatable **Visits**, not a simple visited flag.
 - **Visit** was resolved as an in-person experience; at-home coffee tracking is outside the initial meaning.
-- The minimum meaningful **Visit** is a **Coffee Roaster** plus a **Visit Date**.
+- The minimum meaningful **Visit** is a **Coffee Roaster**, **Roaster Location**, and **Visit Date**.
 - **Journal** was resolved as private by default for v1.
 - **Public Discovery** does not require sign-in; a **Journal** does.
 - The v1 home experience should lead with **Area Discovery**.

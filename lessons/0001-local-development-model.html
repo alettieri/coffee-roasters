@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local development: what runs where</title>
+  <link rel="stylesheet" href="../assets/lesson.css">
+</head>
+<body>
+<main>
+  <h1>Local development: what runs where</h1>
+  <p class="lede">The practical model is local-first: application, Cloudflare emulation, and PostgreSQL run on your machine. Neon enters the workflow for previews and release verification.</p>
+
+  <h2>The fast loop</h2>
+  <div class="flow">Browser
+  ↓ localhost
+Nuxt + Vue
+  ↓
+Nitro running with local workerd/Miniflare emulation
+  ├── local R2 binding → files on this machine
+  ├── local queue binding → locally handled messages
+  └── DATABASE_URL → PostgreSQL Docker container</div>
+
+  <p>Start PostgreSQL with Docker Compose, then run <code>pnpm dev</code>. Nitro reads the Cloudflare binding definitions and emulates them through Miniflare. Application code accesses bindings through the request event in the same shape used in production. The application connects to the PostgreSQL container through a local connection string.</p>
+
+  <h2>Where Neon enters</h2>
+  <p>Neon remains the deployed PostgreSQL provider. Preview environments and migration checks use isolated Neon branches with their own connection strings. This catches provider-specific differences before production while keeping daily development fast, offline-capable, and disposable.</p>
+
+  <h2>The production-runtime check</h2>
+  <div class="flow">pnpm build
+  ↓
+Nitro cloudflare_module output
+  ↓
+wrangler dev
+  ↓
+local workerd preview using production-shaped configuration
+  ↓
+release verification against an isolated Neon branch</div>
+
+  <p>Use this slower loop before merging or deploying. It catches code that works in the convenient development server but fails under the actual Workers runtime, build output, bindings, or compatibility flags.</p>
+
+  <h2>What is local and what is real?</h2>
+  <table>
+    <thead><tr><th>Capability</th><th>Fast local loop</th><th>Preview/production</th></tr></thead>
+    <tbody>
+      <tr><td>Vue/Nuxt UI</td><td>Local dev server</td><td>Built Worker assets</td></tr>
+      <tr><td>Nitro server routes</td><td>Local emulation</td><td>Cloudflare workerd</td></tr>
+      <tr><td>PostgreSQL</td><td>Local Docker container</td><td>Preview or production Neon branch</td></tr>
+      <tr><td>R2</td><td>Local emulated bucket</td><td>Real non-production or production bucket</td></tr>
+      <tr><td>Queues/Cron</td><td>Emulated or invoked manually</td><td>Real Cloudflare delivery and scheduling</td></tr>
+      <tr><td>Resend</td><td>Stub, test recipient, or provider test mode</td><td>Real provider</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The rule to remember</h2>
+  <div class="card check">
+    <p><strong>Use Docker PostgreSQL and <code>pnpm dev</code> for the fast local loop. Use Wrangler/workerd plus an isolated Neon branch to prove runtime and provider compatibility before deployment.</strong></p>
+  </div>
+
+  <h2>Quick retrieval check</h2>
+  <ol>
+    <li>If you upload a photo during ordinary local development, should it appear in the production R2 bucket?</li>
+    <li>If a migration succeeds against local Docker PostgreSQL, has Neon changed?</li>
+    <li>If a feature works locally, what two compatibility checks remain before deployment?</li>
+  </ol>
+
+  <p>Answers: no; no; run the Cloudflare build through Wrangler/workerd and verify migrations against an isolated Neon branch. Ask the agent about any part of the flow that remains unclear.</p>
+
+  <p>Primary source: <a href="https://nitro.build/deploy/providers/cloudflare">Nitro’s Cloudflare provider documentation</a>.</p>
+</main>
+</body>
+</html>
