@@ -18,16 +18,16 @@ The first version should avoid becoming a generic Yelp or Google Maps alternativ
 
 There are several existing and adjacent platforms:
 
-| Platform | What It Does | Competitive Implication |
-| --- | --- | --- |
-| [Roasters](https://www.roasters.app/) | Global map of specialty cafes and roasters, with community reviews and owner-claimed profiles. | Strong direct competitor for specialty coffee discovery. |
-| [Sprudge Maps](https://www.sprudgemaps.com/) | Free global coffee map from Sprudge, focused on coffee locations. | Strong brand credibility, but more map/media oriented than roaster-commerce oriented. |
-| [CoffeeRoasters.io](https://coffeeroasters.io/) | Specialty roaster directory with city/tag browsing and paid featured placements. | Direct proof that a roaster directory monetization model exists. |
-| [Roasters Map](https://roastersmap.com/) | Roaster directory/marketplace structure with California listings. | Direct California-relevant competitor. |
-| [theBeanNetwork](https://www.thebeannetwork.com/) | Specialty roaster discovery with roaster profiles, bean browsing, and partner placements. | Adjacent competitor with a stronger bean/product browsing angle. |
-| [CafeRadar](https://caferadar.app/) | Specialty coffee discovery app with map, lists, reviews, and community features. | App-first coffee discovery competitor. |
-| [Caffex](https://caffex.io/) | Specialty coffee discovery, reviews, rewards, business tools, and marketplace features. | Broader product vision that overlaps with discovery, loyalty, and commerce. |
-| [Bean Box](https://beanbox.com/), [MistoBox](https://www.mistobox.com/quiz), [Beanz](https://www.beanz.com/en-us/coffee/roasters), Trade-like services | Multi-roaster coffee buying, subscriptions, and curated selection. | Strong commerce/subscription competitors, but less focused on local roaster discovery. |
+| Platform                                                                                                                                               | What It Does                                                                                   | Competitive Implication                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| [Roasters](https://www.roasters.app/)                                                                                                                  | Global map of specialty cafes and roasters, with community reviews and owner-claimed profiles. | Strong direct competitor for specialty coffee discovery.                               |
+| [Sprudge Maps](https://www.sprudgemaps.com/)                                                                                                           | Free global coffee map from Sprudge, focused on coffee locations.                              | Strong brand credibility, but more map/media oriented than roaster-commerce oriented.  |
+| [CoffeeRoasters.io](https://coffeeroasters.io/)                                                                                                        | Specialty roaster directory with city/tag browsing and paid featured placements.               | Direct proof that a roaster directory monetization model exists.                       |
+| [Roasters Map](https://roastersmap.com/)                                                                                                               | Roaster directory/marketplace structure with California listings.                              | Direct California-relevant competitor.                                                 |
+| [theBeanNetwork](https://www.thebeannetwork.com/)                                                                                                      | Specialty roaster discovery with roaster profiles, bean browsing, and partner placements.      | Adjacent competitor with a stronger bean/product browsing angle.                       |
+| [CafeRadar](https://caferadar.app/)                                                                                                                    | Specialty coffee discovery app with map, lists, reviews, and community features.               | App-first coffee discovery competitor.                                                 |
+| [Caffex](https://caffex.io/)                                                                                                                           | Specialty coffee discovery, reviews, rewards, business tools, and marketplace features.        | Broader product vision that overlaps with discovery, loyalty, and commerce.            |
+| [Bean Box](https://beanbox.com/), [MistoBox](https://www.mistobox.com/quiz), [Beanz](https://www.beanz.com/en-us/coffee/roasters), Trade-like services | Multi-roaster coffee buying, subscriptions, and curated selection.                             | Strong commerce/subscription competitors, but less focused on local roaster discovery. |
 
 Conclusion: the category is validated, but not empty. Differentiation matters from day one.
 
@@ -138,17 +138,17 @@ Recommended approach:
 
 ## Risk Analysis
 
-| Risk | Severity | Why It Matters | Mitigation |
-| --- | --- | --- | --- |
-| Competitive saturation | High | Existing maps, directories, and coffee apps already serve parts of this need. | Focus on California roasters and coffee-specific filters. |
-| Weak differentiation | High | A generic directory will be easy to ignore. | Lead with taste, freshness, buy-direct links, and local editorial depth. |
-| Data freshness | High | Roasters close, move, change hours, and rotate offerings often. | Add claim profiles, periodic data checks, and roaster update tools. |
-| Monetization uncertainty | Medium | Small roasters may not pay before traffic exists. | Start with free listings and prove outbound traffic first. |
-| Review/legal compliance | Medium | Review aggregation has policy and regulatory risks. | Link out, attribute correctly, and avoid copied review content unless API terms permit it. |
-| SEO difficulty | Medium | Google, Yelp, Reddit, Sprudge, and existing directories are established. | Build long-tail city/category pages and original editorial content. |
-| Operational creep | Medium | Marketplace fulfillment can become complex quickly. | Delay checkout and fulfillment until discovery demand is proven. |
-| Quality control | Medium | "Specialty" and "independent" need clear definitions. | Publish inclusion standards and let roasters request corrections. |
-| Supply-side adoption | Medium | Roasters may not update profiles unless there is clear value. | Provide free claim tools, analytics, and visible referral traffic. |
+| Risk                     | Severity | Why It Matters                                                                | Mitigation                                                                                 |
+| ------------------------ | -------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Competitive saturation   | High     | Existing maps, directories, and coffee apps already serve parts of this need. | Focus on California roasters and coffee-specific filters.                                  |
+| Weak differentiation     | High     | A generic directory will be easy to ignore.                                   | Lead with taste, freshness, buy-direct links, and local editorial depth.                   |
+| Data freshness           | High     | Roasters close, move, change hours, and rotate offerings often.               | Add claim profiles, periodic data checks, and roaster update tools.                        |
+| Monetization uncertainty | Medium   | Small roasters may not pay before traffic exists.                             | Start with free listings and prove outbound traffic first.                                 |
+| Review/legal compliance  | Medium   | Review aggregation has policy and regulatory risks.                           | Link out, attribute correctly, and avoid copied review content unless API terms permit it. |
+| SEO difficulty           | Medium   | Google, Yelp, Reddit, Sprudge, and existing directories are established.      | Build long-tail city/category pages and original editorial content.                        |
+| Operational creep        | Medium   | Marketplace fulfillment can become complex quickly.                           | Delay checkout and fulfillment until discovery demand is proven.                           |
+| Quality control          | Medium   | "Specialty" and "independent" need clear definitions.                         | Publish inclusion standards and let roasters request corrections.                          |
+| Supply-side adoption     | Medium   | Roasters may not update profiles unless there is clear value.                 | Provide free claim tools, analytics, and visible referral traffic.                         |
 
 ## Success Metrics
 
