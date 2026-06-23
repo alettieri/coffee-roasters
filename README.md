@@ -8,9 +8,9 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 
 ## Foundation stack
 
-- Vue 3.5.38, Nuxt 4.4.8, Nitro, and strict TypeScript 6.0.3
-- pnpm 11.9.0 through Corepack
-- Nuxt ESLint, ESLint 10.5.0, Prettier 3.8.4, Vitest 4.1.9, and Wrangler 4.104.0
+- Vue 3, Nuxt 4, Nitro, and strict TypeScript 6
+- pnpm 11 through Corepack
+- Nuxt ESLint, ESLint 10, Prettier 3, Vitest 4, and Wrangler 4
 - PostgreSQL through Drizzle ORM
 - Docker PostgreSQL locally and Neon when deployed
 - Cloudflare Workers, Hyperdrive, R2, Images, Queues, and Cron Triggers
