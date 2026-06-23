@@ -4,7 +4,7 @@ Date: June 20, 2026
 
 This estimate covers the selected deployed infrastructure:
 
-- Nuxt and Nitro on Cloudflare Workers
+- Nuxt and Nitro on Cloudflare Workers with Hyperdrive
 - Cloudflare R2, Images, Queues, and Cron Triggers
 - PostgreSQL on Neon
 - Better Auth using the application database
@@ -142,6 +142,7 @@ Expected budget: **approximately $27–$81/month**. Neon compute and transaction
 ### Strengths
 
 - One Cloudflare account operates compute, object storage, image processing, queues, schedules, edge caching, and platform logs.
+- Hyperdrive provides the deployed Worker-to-Neon connection and pooling boundary while migrations use a direct Neon connection.
 - Nitro has a direct Cloudflare Workers target, avoiding an additional deployment adapter.
 - PostgreSQL remains standard and portable despite Neon hosting.
 - Better Auth avoids a separate per-user identity bill.

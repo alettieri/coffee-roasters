@@ -22,7 +22,7 @@ The implementation will:
 - add explicit error reporting around critical authentication, database, photo-processing, email, and administrative workflows;
 - correlate application errors with Cloudflare request and queue identifiers where practical;
 - monitor queue retries, dead-letter or terminal failures, scheduled-job outcomes, Worker errors, and latency through Cloudflare telemetry;
-- use environment and release identifiers to distinguish local, preview, and production events;
+- use environment and release identifiers to distinguish local, staging, and production events;
 - configure source maps securely for actionable stack traces;
 - sample performance traces to control cost and data volume; and
 - define alerts for sustained authentication failures, elevated server errors, photo-processing failure rates, queue backlog, and cleanup failures.

@@ -21,7 +21,7 @@ The implementation will:
 - use pooled connections for application traffic when appropriate;
 - use direct connections for migrations when required;
 - keep credentials in environment-specific secret storage;
-- use isolated Neon branches for significant schema work, previews, or automated verification when useful; and
+- use an isolated shared staging branch plus temporary branches for significant migration or recovery verification when useful; and
 - apply checked-in Drizzle migrations through an explicit deployment step.
 
 Provider-specific features must not leak into core domain logic without a separate architectural decision.
@@ -29,9 +29,10 @@ Provider-specific features must not leak into core domain logic without a separa
 ## Consequences
 
 - The project does not need to operate PostgreSQL infrastructure.
-- Database branches can isolate migration work and preview environments.
+- Database branches can isolate staging, migration verification, and recovery exercises.
 - Connection limits, cold starts, pooling, and deployment-region latency must be considered.
 - Local and automated tests still need a defined database strategy.
 - ADR 0026 defines Docker PostgreSQL for daily local development and local integration tests.
+- ADR 0036 defines Hyperdrive for deployed application traffic and direct Neon connections for migrations.
 - Moving providers should remain feasible because the application targets standard PostgreSQL.
 - Neon account structure, regions, retention, and production backup settings require operational configuration outside the codebase.

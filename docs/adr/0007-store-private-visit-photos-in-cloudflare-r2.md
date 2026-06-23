@@ -33,7 +33,9 @@ The implementation will:
 - delete canonical objects when their Visit Photo is deleted; and
 - periodically remove abandoned quarantine objects.
 
-R2 access will be isolated behind an application storage interface using only the required S3-compatible operations. ADR 0009 selects Cloudflare Images for sanitization and transformation.
+Presigned browser access will use narrowly scoped R2 S3 credentials held only by server-side code, with explicit CORS configuration and credential rotation. R2 bindings will be used for queue processing, sanitization input, canonical object management, deletion, and cleanup.
+
+R2 access will be isolated behind an application storage interface. ADR 0009 selects Cloudflare Images for sanitization and transformation.
 
 ## Consequences
 

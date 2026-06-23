@@ -21,14 +21,14 @@ The implementation will:
 - disable public registration;
 - require email verification before private account use;
 - support password reset through Resend;
-- provision the initial Local Coffee Lover and maintainer access through an explicit, one-time bootstrap command;
+- provision the initial Local Coffee Lover and maintainer access through an explicit local CLI that invokes application operations while connecting directly to Neon with protected bootstrap input;
 - make bootstrap execution idempotent and safe to rerun;
 - read bootstrap credentials from protected environment input rather than source control;
 - avoid logging passwords, verification tokens, recovery tokens, or session data;
 - rate-limit sign-in, verification, and password-recovery endpoints; and
 - store maintainer authorization in application data and enforce it server-side.
 
-The bootstrap command must refuse unsafe production defaults and must not remain an unauthenticated HTTP endpoint.
+The bootstrap command must refuse unsafe production defaults, must not use the database owner credential, and must not remain an unauthenticated HTTP endpoint.
 
 Additional accounts, invitations, public registration, passkeys, and OAuth providers require a concrete user need and a separate decision.
 

@@ -20,11 +20,11 @@ The implementation will:
 
 - use Worker-compatible libraries and web platform APIs where practical;
 - enable only required Node.js compatibility features;
-- connect to Neon through a Workers-compatible driver;
+- connect to Neon through environment-specific Hyperdrive bindings under ADR 0036;
 - access R2 and other Cloudflare resources through bindings;
 - expose queue and scheduled handlers through Nitro's Cloudflare integration;
 - store secrets through Cloudflare secret management;
-- use separate preview and production environments;
+- use separate shared staging and production environments;
 - verify production builds in the `workerd` runtime; and
 - pin and deliberately upgrade Nuxt, Nitro, and Wrangler.
 
