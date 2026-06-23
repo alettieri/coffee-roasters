@@ -76,12 +76,12 @@ Domain modules must not depend on Vue, Nuxt, Nitro request events, or provider S
 
 ## Environment matrix
 
-| Environment | Compute | Database | External access |
-| --- | --- | --- | --- |
-| Local | Nuxt development and local Cloudflare emulation | Docker PostgreSQL | No production services |
-| CI | GitHub-hosted runner | Disposable PostgreSQL service | No deployment credentials |
-| Staging | Cloudflare Worker | Isolated Neon staging branch | Staging-only secrets and resources |
-| Production | Cloudflare Worker | Neon production branch/project | Production-only secrets and resources |
+| Environment | Compute                                         | Database                       | External access                       |
+| ----------- | ----------------------------------------------- | ------------------------------ | ------------------------------------- |
+| Local       | Nuxt development and local Cloudflare emulation | Docker PostgreSQL              | No production services                |
+| CI          | GitHub-hosted runner                            | Disposable PostgreSQL service  | No deployment credentials             |
+| Staging     | Cloudflare Worker                               | Isolated Neon staging branch   | Staging-only secrets and resources    |
+| Production  | Cloudflare Worker                               | Neon production branch/project | Production-only secrets and resources |
 
 Use one shared staging environment initially. Do not create per-PR Cloudflare or Neon environments until parallel development creates a measured need.
 

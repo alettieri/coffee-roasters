@@ -87,16 +87,16 @@ CI cost is excluded from totals because repository visibility and account allowa
 
 These are planning estimates, not provider quotes.
 
-| Service | Single user | Early public use | Modest growth |
-| --- | ---: | ---: | ---: |
-| Cloudflare Workers | $0 free / $5 recommended | $5 | $5–$10 |
-| R2 | $0 | Less than $1 | $2–$5 |
-| Images | $0 | $0–$3 | $5–$15 |
-| Queues and Cron | $0 | $0 | Less than $1 |
-| Neon | $0 | $0–$15 | $15–$30 |
-| Resend | $0 | $0 | $0–$20 |
-| Sentry | $0 | $0 | $0 unless a team plan is needed |
-| **Estimated total** | **$0–$5** | **$5–$24** | **$27–$81** |
+| Service             |              Single user | Early public use |                   Modest growth |
+| ------------------- | -----------------------: | ---------------: | ------------------------------: |
+| Cloudflare Workers  | $0 free / $5 recommended |               $5 |                          $5–$10 |
+| R2                  |                       $0 |     Less than $1 |                           $2–$5 |
+| Images              |                       $0 |            $0–$3 |                          $5–$15 |
+| Queues and Cron     |                       $0 |               $0 |                    Less than $1 |
+| Neon                |                       $0 |           $0–$15 |                         $15–$30 |
+| Resend              |                       $0 |               $0 |                          $0–$20 |
+| Sentry              |                       $0 |               $0 | $0 unless a team plan is needed |
+| **Estimated total** |                **$0–$5** |       **$5–$24** |                     **$27–$81** |
 
 ### Single user
 
