@@ -12,7 +12,7 @@ Area pages and Roaster Profiles are public, indexable, and mostly read-heavy. Th
 
 Journal, account, Visit Photo, Suggestion review, and admin responses contain private or authorization-dependent data. A shared-cache mistake on those routes would be a serious privacy failure.
 
-The application runs through Nuxt, Nitro, and Cloudflare Workers, which already provide rendering and cache controls. Adding Redis or another cache system before measured need would create unnecessary invalidation and operational complexity.
+The application runs through Nuxt and Nitro, which already provide rendering and cache controls. Adding Redis or another cache system before measured need would create unnecessary invalidation and operational complexity.
 
 ## Decision
 

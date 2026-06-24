@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-Better Auth requires transactional email delivery for workflows such as email verification and password recovery. The application runs on Cloudflare Workers and needs a provider with an HTTP-based API that does not depend on a traditional Node.js server or direct SMTP connectivity.
+Better Auth requires transactional email delivery for workflows such as email verification and password recovery. The application needs a provider with an HTTP-based API that does not depend on a traditional Node.js server or direct SMTP connectivity.
 
 ## Decision
 
@@ -19,7 +19,7 @@ The implementation will:
 - use Better Auth to generate and validate verification and recovery tokens;
 - use Resend only as the email delivery provider;
 - call Resend through its HTTPS API from server-side code;
-- keep transactional email templates version-controlled and compatible with the Cloudflare Workers runtime;
+- keep transactional email templates version-controlled and compatible with the Cloudflare runtime;
 - verify a dedicated sending domain and configure SPF, DKIM, and DMARC;
 - keep API keys in Cloudflare secret storage;
 - avoid including sensitive account data in email content or delivery metadata;

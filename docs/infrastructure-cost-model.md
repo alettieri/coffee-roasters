@@ -4,7 +4,7 @@ Date: June 20, 2026
 
 This estimate covers the selected deployed infrastructure:
 
-- Nuxt and Nitro on Cloudflare Workers with Hyperdrive
+- Nuxt and Nitro on Cloudflare Pages with Hyperdrive
 - Cloudflare R2, Images, Queues, and Cron Triggers
 - PostgreSQL on Neon
 - Better Auth using the application database
@@ -16,7 +16,7 @@ It excludes domain registration, taxes, paid support, developer AI tools, and lo
 
 ## Pricing Inputs
 
-### Cloudflare Workers
+### Cloudflare Pages runtime
 
 - Free: 100,000 requests per day with 10 milliseconds of CPU time per invocation.
 - Paid: $5 minimum per account each month.
@@ -24,7 +24,7 @@ It excludes domain registration, taxes, paid support, developer AI tools, and lo
 - Paid overage: $0.30 per million requests and $0.02 per million CPU milliseconds.
 - Static asset requests are free and unlimited.
 
-The free plan is viable for personal use, but its per-invocation CPU limit is the most likely constraint for server-rendered Nuxt requests. The $5 paid plan is the recommended production baseline once reliability matters.
+Cloudflare Pages deploys the application into Cloudflare's runtime, so the same per-invocation CPU constraint still applies to server-rendered Nuxt requests. The $5 paid plan is the recommended production baseline once reliability matters.
 
 ### Cloudflare R2
 
@@ -89,7 +89,7 @@ These are planning estimates, not provider quotes.
 
 | Service             |              Single user | Early public use |                   Modest growth |
 | ------------------- | -----------------------: | ---------------: | ------------------------------: |
-| Cloudflare Workers  | $0 free / $5 recommended |               $5 |                          $5–$10 |
+| Cloudflare Pages    | $0 free / $5 recommended |               $5 |                          $5–$10 |
 | R2                  |                       $0 |     Less than $1 |                           $2–$5 |
 | Images              |                       $0 |            $0–$3 |                          $5–$15 |
 | Queues and Cron     |                       $0 |               $0 |                    Less than $1 |
@@ -102,20 +102,20 @@ These are planning estimates, not provider quotes.
 
 Assumptions:
 
-- fewer than 100,000 Worker requests per day;
+- fewer than 100,000 Cloudflare Pages requests per day;
 - fewer than 5,000 photo transformations per month;
 - less than 10 GB of R2 storage;
 - intermittent database use under 100 CU-hours and 0.5 GB;
 - negligible authentication email; and
 - one Sentry user.
 
-Recommended budget: **$5/month**, using Workers Paid for more CPU headroom while leaving the other services on free tiers. Running entirely on free tiers is possible if the Nuxt workload stays within Workers Free CPU limits.
+Recommended budget: **$5/month**, using the paid Cloudflare compute plan for more CPU headroom while leaving the other services on free tiers. Running entirely on free tiers is possible if the Nuxt workload stays within the Cloudflare free CPU limits.
 
 ### Early public use
 
 Assumptions:
 
-- fewer than 10 million dynamic Worker requests per month;
+- fewer than 10 million dynamic Cloudflare Pages requests per month;
 - up to roughly 10,000 Visit Photo uploads per month;
 - less than 50 GB stored in R2;
 - intermittent PostgreSQL load;
@@ -128,7 +128,7 @@ Expected budget: **approximately $5–$24/month**. The range is primarily determ
 
 Assumptions:
 
-- Worker traffic remains near or moderately above the included paid allowance;
+- Pages traffic remains near or moderately above the included paid allowance;
 - tens of thousands of Visit Photo uploads per month;
 - 100–300 GB in R2;
 - Neon Launch with intermittent or low sustained load;
@@ -141,21 +141,21 @@ Expected budget: **approximately $27–$81/month**. Neon compute and transaction
 
 ### Strengths
 
-- One Cloudflare account operates compute, object storage, image processing, queues, schedules, edge caching, and platform logs.
-- Hyperdrive provides the deployed Worker-to-Neon connection and pooling boundary while migrations use a direct Neon connection.
-- Nitro has a direct Cloudflare Workers target, avoiding an additional deployment adapter.
+- One Cloudflare account operates Pages compute, object storage, image processing, queues, schedules, edge caching, and platform logs.
+- Hyperdrive provides the deployed Pages-to-Neon connection and pooling boundary while migrations use a direct Neon connection.
+- Nitro has a direct Cloudflare Pages target, avoiding an additional deployment adapter.
 - PostgreSQL remains standard and portable despite Neon hosting.
 - Better Auth avoids a separate per-user identity bill.
 - Docker keeps daily database development independent of Neon availability and billing.
 - Every major service has an adequate entry tier for a one-user project.
-- TypeScript, checked-in Drizzle migrations, Wrangler configuration, and GitHub Actions provide explicit artifacts that coding agents can inspect and verify.
+- TypeScript, checked-in Drizzle migrations, Cloudflare Pages configuration, and GitHub Actions provide explicit artifacts that coding agents can inspect and verify.
 
 ### Main risks
 
-1. **Workers runtime compatibility**
+1. **Cloudflare runtime compatibility**
    Nuxt dependencies must work in `workerd`. CI must retain production-runtime tests.
 
-2. **Workers Free CPU ceiling**
+2. **Cloudflare CPU ceiling**
    A server-rendered request may exceed the free plan's 10 millisecond CPU limit. Treat $5/month as the realistic production baseline.
 
 3. **Neon free-plan production behavior**
@@ -165,7 +165,7 @@ Expected budget: **approximately $27–$81/month**. Neon compute and transaction
    Calls through the Images binding count as transformations. Retry loops and accidental repeated processing need idempotency and monitoring.
 
 5. **Provider concentration**
-   Cloudflare failure affects compute, photos, queues, and processing together. This is accepted because consolidated operation is valuable for a one-person project.
+   Cloudflare Pages failure affects compute, photos, queues, and processing together. This is accepted because consolidated operation is valuable for a one-person project.
 
 6. **Preview-environment sprawl**
    Stale Neon branches and Cloudflare resources can create cost and confusion. Preview resources need expiration and cleanup.
@@ -176,7 +176,7 @@ Keep the selected stack.
 
 For the initial single-user deployment:
 
-- use Cloudflare Workers Paid if the application is intended to remain reliably available;
+- use the relevant Cloudflare Pages paid compute plan if the application is intended to remain reliably available;
 - remain on Neon Free until storage, availability, or measured compute usage justifies Launch;
 - use the free R2, Images, Queues, Resend, and Sentry allowances;
 - configure budget alerts in Cloudflare, Neon, Resend, Sentry, and GitHub;

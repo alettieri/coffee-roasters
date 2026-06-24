@@ -80,8 +80,8 @@ Domain modules must not depend on Vue, Nuxt, Nitro request events, or provider S
 | ----------- | ----------------------------------------------- | ------------------------------ | ------------------------------------- |
 | Local       | Nuxt development and local Cloudflare emulation | Docker PostgreSQL              | No production services                |
 | CI          | GitHub-hosted runner                            | Disposable PostgreSQL service  | No deployment credentials             |
-| Staging     | Cloudflare Worker                               | Isolated Neon staging branch   | Staging-only secrets and resources    |
-| Production  | Cloudflare Worker                               | Neon production branch/project | Production-only secrets and resources |
+| Staging     | Cloudflare Pages preview deployment             | Isolated Neon staging branch   | Staging-only secrets and resources    |
+| Production  | Cloudflare Pages production deployment          | Neon production branch/project | Production-only secrets and resources |
 
 Use one shared staging environment initially. Do not create per-PR Cloudflare or Neon environments until parallel development creates a measured need.
 
