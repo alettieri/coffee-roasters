@@ -8,7 +8,7 @@ export const serverEnvironmentSchema = z.object({
     .min(1)
     .url()
     .refine((value) => postgresUrlPattern.test(value), {
-      message: 'DATABASE_URL must be a postgres:// or postgresql:// URL',
+      message: 'DATABASE_URL must use a PostgreSQL URL scheme',
     }),
 });
 

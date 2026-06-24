@@ -1,12 +1,16 @@
 import { defineConfig } from 'drizzle-kit';
 
-const localDatabaseUrl =
-  'postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_dev';
+import {
+  loadEnvironmentFile,
+  requireEnvironmentVariable,
+} from './scripts/environment/load-env-file';
+
+loadEnvironmentFile();
 
 export default defineConfig({
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.MIGRATION_DATABASE_URL ?? localDatabaseUrl,
+    url: requireEnvironmentVariable('MIGRATION_DATABASE_URL'),
   },
   out: './drizzle',
   schema: './server/platform/database/schema.ts',

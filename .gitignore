@@ -80,10 +80,9 @@ typings/
 
 # dotenv environment variables file
 .env
-.env.test
 .env.*
 !.env.example
-!.env.test.example
+!.env.test
 .dev.vars
 .dev.vars.*
 

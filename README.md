@@ -40,7 +40,7 @@ DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/co
 MIGRATION_DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_dev
 ```
 
-Create a local `.env.test` for integration-test commands:
+The repository includes `.env.test` with local-only integration database URLs:
 
 ```sh
 DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test

@@ -6,10 +6,9 @@ import {
   type DatabaseClient,
 } from '../../server/platform/database/client';
 import { verifyDatabaseConnection } from '../../server/platform/database/health';
+import { requireEnvironmentVariable } from '../../scripts/environment/load-env-file';
 
-const testDatabaseUrl =
-  process.env.DATABASE_URL ??
-  'postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test';
+const testDatabaseUrl = requireEnvironmentVariable('DATABASE_URL');
 
 const deterministicTimestamp = '2026-06-23T12:00:00.000Z';
 const deterministicId = '00000000-0000-7000-8000-000000000003';

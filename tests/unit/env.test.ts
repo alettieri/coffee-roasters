@@ -3,22 +3,29 @@ import { ZodError } from 'zod';
 
 import { parseServerEnvironment } from '../../server/platform/env';
 
+function databaseUrl(protocol: 'postgres' | 'postgresql' | 'https'): string {
+  return `${protocol}://user:password@localhost:5432/app`;
+}
+
 describe('server environment validation', () => {
   it('accepts postgres connection URLs', () => {
+    const postgresUrl = databaseUrl('postgres');
+    const postgresqlUrl = databaseUrl('postgresql');
+
     expect(
       parseServerEnvironment({
-        DATABASE_URL: 'postgres://user:password@localhost:5432/app',
+        DATABASE_URL: postgresUrl,
       }),
     ).toEqual({
-      DATABASE_URL: 'postgres://user:password@localhost:5432/app',
+      DATABASE_URL: postgresUrl,
     });
 
     expect(
       parseServerEnvironment({
-        DATABASE_URL: 'postgresql://user:password@localhost:5432/app',
+        DATABASE_URL: postgresqlUrl,
       }),
     ).toEqual({
-      DATABASE_URL: 'postgresql://user:password@localhost:5432/app',
+      DATABASE_URL: postgresqlUrl,
     });
   });
 
@@ -26,7 +33,7 @@ describe('server environment validation', () => {
     ['missing DATABASE_URL', {}],
     ['empty DATABASE_URL', { DATABASE_URL: '' }],
     ['non-URL DATABASE_URL', { DATABASE_URL: 'localhost:5432/app' }],
-    ['non-Postgres DATABASE_URL', { DATABASE_URL: 'https://localhost/app' }],
+    ['non-Postgres DATABASE_URL', { DATABASE_URL: databaseUrl('https') }],
   ])('rejects %s', (_caseName, source) => {
     expect(() => parseServerEnvironment(source)).toThrow(ZodError);
   });
