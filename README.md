@@ -26,8 +26,9 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 - `pnpm test` runs the unit Vitest suite.
 - `pnpm test:unit` runs unit tests only.
 - `pnpm test:integration` runs database integration tests against local PostgreSQL.
+- `pnpm test:integration:ci` applies checked-in migrations and runs database integration tests against the PostgreSQL service supplied by CI.
 - `pnpm build` builds the Nuxt application with Nitro's Cloudflare module preset.
-- `pnpm check` runs formatting verification, linting, type checking, and tests.
+- `pnpm check` runs formatting verification, linting, type checking, migration consistency verification, tests, and the production build.
 
 ## Local database
 
@@ -58,9 +59,21 @@ Database commands:
 - `pnpm db:integration:reset` recreates the integration-test PostgreSQL container from an empty volume.
 - `pnpm db:migrate:integration` applies checked-in Drizzle migrations to the integration-test database using `.env.test`.
 - `pnpm db:generate` generates reviewable Drizzle migrations from `server/platform/database/schema.ts`.
+- `pnpm db:migrations:check` verifies that `server/platform/database/schema.ts` and checked-in Drizzle migrations are consistent.
 - `pnpm test:integration` resets the ephemeral integration database, applies migrations, and verifies database health, writes, reads, transactions, and cleanup against `coffee_roasters_test`.
 
 Schema push and synchronization commands are intentionally not part of the workflow.
+
+## Continuous integration
+
+GitHub Actions runs credential-free CI for pull requests targeting `main` and pushes to `main`. Repository rules should require these exact check names:
+
+- `Verify` installs with the pinned Node.js and pnpm versions, verifies Prettier formatting, runs Nuxt ESLint, runs strict Nuxt type checking, runs Vitest unit tests, verifies Drizzle migration consistency, applies checked-in migrations to an isolated PostgreSQL service, and runs database integration tests.
+- `Build` installs with the pinned Node.js and pnpm versions and runs the Nuxt production build.
+
+The workflow does not use `pull_request_target`, GitHub environments, deployment credentials, or Cloudflare, Neon, Resend, Sentry, production, or staging secrets. The pnpm store cache is keyed by `pnpm-lock.yaml`; `node_modules` is not cached.
+
+Dependabot security updates and repository ruleset setup remain human-owned repository configuration tracked by GitHub issue #18.
 
 ## Before contributing
 
