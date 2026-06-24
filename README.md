@@ -13,7 +13,7 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 - Nuxt ESLint, ESLint 10, Prettier 3, Vitest 4, and Wrangler 4
 - PostgreSQL through Drizzle ORM
 - Docker PostgreSQL locally and Neon when deployed
-- Cloudflare Workers, Hyperdrive, R2, Images, Queues, and Cron Triggers
+- Cloudflare Pages with Nitro's `cloudflare_pages` preset, plus Hyperdrive, R2, Images, Queues, and Cron Triggers
 - Better Auth, Resend, Sentry, Vitest, Playwright, and GitHub Actions
 
 ## Repository commands
@@ -27,7 +27,7 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 - `pnpm test:unit` runs unit tests only.
 - `pnpm test:integration` runs database integration tests against local PostgreSQL.
 - `pnpm test:integration:ci` applies checked-in migrations and runs database integration tests against the PostgreSQL service supplied by CI.
-- `pnpm build` builds the Nuxt application with Nitro's Cloudflare module preset.
+- `pnpm build` builds the Nuxt application for Cloudflare Pages through Nitro's `cloudflare_pages` preset.
 - `pnpm check` runs formatting verification, linting, type checking, migration consistency verification, tests, and the production build.
 
 ## Local database
