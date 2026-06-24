@@ -3,7 +3,7 @@
 ## Knowledge
 
 - [Nitro: Cloudflare deployment](https://nitro.build/deploy/providers/cloudflare)
-  Primary reference for the `cloudflare_module` preset, local Miniflare binding emulation, Wrangler previews, runtime hooks, and environment variables.
+  Primary reference for the `cloudflare_pages` preset, local Miniflare binding emulation, Wrangler previews, runtime hooks, and environment variables.
 - [Nuxt: Deploy to Cloudflare](https://nuxt.com/deploy/cloudflare)
   Primary Nuxt overview for Cloudflare builds and deployment.
 - [Cloudflare Workers: Development and testing](https://developers.cloudflare.com/workers/development-testing/)

@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CI: true
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: coffee_roasters_test
+          POSTGRES_PASSWORD: coffee_roasters_integration
+          POSTGRES_USER: coffee_roasters_integration
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready --dbname coffee_roasters_test --username coffee_roasters_integration"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgres://coffee_roasters_integration:coffee_roasters_integration@127.0.0.1:5432/coffee_roasters_test
+      MIGRATION_DATABASE_URL: postgres://coffee_roasters_integration:coffee_roasters_integration@127.0.0.1:5432/coffee_roasters_test
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@7088e561eb65bb68695d245aa206f005ef30921d
+        with:
+          package_json_file: package.json
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify Prettier formatting
+        run: pnpm format:check
+
+      - name: Run Nuxt ESLint
+        run: pnpm lint
+
+      - name: Run strict TypeScript check
+        run: pnpm typecheck
+
+      - name: Run Vitest unit tests
+        run: pnpm test
+
+      - name: Verify Drizzle migration consistency
+        run: pnpm db:migrations:check
+
+      - name: Run database integration tests
+        run: pnpm test:integration:ci
+
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      DATABASE_URL: postgres://coffee_roasters_build:coffee_roasters_build@127.0.0.1:5432/coffee_roasters_build
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@7088e561eb65bb68695d245aa206f005ef30921d
+        with:
+          package_json_file: package.json
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Nuxt production output
+        run: pnpm build
