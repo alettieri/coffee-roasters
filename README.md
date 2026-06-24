@@ -38,7 +38,8 @@ Create a local `.env` with server-only database URLs before starting Nuxt or app
 ```sh
 DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_dev
 MIGRATION_DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_dev
-TEST_DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_test
+TEST_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test
+TEST_MIGRATION_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test
 ```
 
 Database commands:
@@ -47,8 +48,12 @@ Database commands:
 - `pnpm db:stop` stops local PostgreSQL without deleting the named volume.
 - `pnpm db:migrate` applies checked-in Drizzle migrations using `MIGRATION_DATABASE_URL`.
 - `pnpm db:reset` deletes the local PostgreSQL volume, waits for the recreated container, and applies migrations.
+- `pnpm db:integration:start` starts an ephemeral integration-test PostgreSQL container and waits for its healthcheck.
+- `pnpm db:integration:stop` stops the integration-test PostgreSQL container and deletes its volume.
+- `pnpm db:integration:reset` recreates the integration-test PostgreSQL container from an empty volume.
+- `pnpm db:migrate:integration` applies checked-in Drizzle migrations to the integration-test database.
 - `pnpm db:generate` generates reviewable Drizzle migrations from `server/platform/database/schema.ts`.
-- `pnpm test:integration` verifies database health, writes, reads, transactions, and cleanup against `coffee_roasters_test`.
+- `pnpm test:integration` resets the ephemeral integration database, applies migrations, and verifies database health, writes, reads, transactions, and cleanup against `coffee_roasters_test`.
 
 Schema push and synchronization commands are intentionally not part of the workflow.
 

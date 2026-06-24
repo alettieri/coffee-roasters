@@ -9,9 +9,9 @@ import { verifyDatabaseConnection } from '../../server/platform/database/health'
 
 const testDatabaseUrl =
   process.env.TEST_DATABASE_URL ??
-  'postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_test';
+  'postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test';
 
-const deterministicClock = new Date('2026-06-23T12:00:00.000Z');
+const deterministicTimestamp = '2026-06-23T12:00:00.000Z';
 const deterministicId = '00000000-0000-7000-8000-000000000003';
 
 function requireDatabaseClient(
@@ -29,21 +29,12 @@ describe('PostgreSQL Drizzle integration', () => {
 
   beforeAll(async () => {
     client = createDatabaseClient(testDatabaseUrl, { maxConnections: 1 });
-    await client.db.execute(sql`
-      create table if not exists integration_test_records (
-        id uuid primary key,
-        label text not null,
-        observed_at timestamptz not null
-      )
-    `);
   });
 
   afterAll(async () => {
     if (!client) {
       return;
     }
-
-    await client.db.execute(sql`drop table if exists integration_test_records`);
     await client.close();
   });
 
@@ -62,7 +53,7 @@ describe('PostgreSQL Drizzle integration', () => {
       .transaction(async (tx) => {
         await tx.execute(sql`
         insert into integration_test_records (id, label, observed_at)
-        values (${deterministicId}, 'deterministic write', ${deterministicClock})
+        values (${deterministicId}, 'deterministic write', ${deterministicTimestamp})
       `);
 
         const inserted = await tx.execute<{
