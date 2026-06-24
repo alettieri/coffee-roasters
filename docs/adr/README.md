@@ -10,7 +10,7 @@ Read accepted ADRs as current policy. Superseded ADRs remain only to preserve de
 - ADR 0005: Neon hosting
 - ADR 0019: Modular monolith
 - ADR 0021: TypeScript, Vue, and Nuxt
-- ADR 0022: Nuxt on Cloudflare Workers with Nitro
+- ADR 0022: Nuxt on Cloudflare Pages with Nitro
 - ADR 0024: Thin Nitro server routes
 - ADR 0026: Docker PostgreSQL for local development
 - ADR 0034: Optimize for agentic development and low operations
@@ -46,7 +46,7 @@ Read accepted ADRs as current policy. Superseded ADRs remain only to preserve de
 - ADR 0010: Resend transactional email
 - ADR 0013: Vitest and Playwright
 - ADR 0015: Sentry and Cloudflare observability
-- ADR 0016: GitHub Actions CI/CD
+- ADR 0016: GitHub Actions CI
 - ADR 0018: Defer product analytics
 
 ## Superseded

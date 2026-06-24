@@ -13,14 +13,20 @@ These are human-owned account and production-safety tasks. Coding agents may doc
 ## Naming and inventory
 
 - [ ] Use `coffee-roasters-staging` and `coffee-roasters-production` prefixes.
-- [ ] Maintain an inventory of Worker, Hyperdrive, Neon, R2, Queue, domain, Resend, Sentry, and GitHub environment identifiers.
+- [ ] Maintain an inventory of Pages, Hyperdrive, Neon, R2, Queue, domain, Resend, Sentry, and GitHub environment identifiers.
 - [ ] Record region, purpose, owner, creation date, and deletion policy for each resource.
 
 ## Cloudflare
 
 - [ ] Confirm the Cloudflare account and production DNS zone.
-- [ ] Create separate least-privilege staging and production API tokens.
-- [ ] Store production tokens only in the protected GitHub production environment.
+- [ ] Create the Cloudflare Pages project connected to this repository.
+- [ ] Set the production branch and preview-branch behavior for the Pages project.
+- [ ] Record the Pages build command, output directory, and any branch-specific build wrapper needed for the current deployment model.
+- [ ] Configure preview and production Pages variables, secrets, and bindings separately.
+- [ ] Document the disable-automatic-deployments controls for production and preview branches.
+- [ ] Document the Pages rollback path from deployment history.
+- [ ] Create separate least-privilege Cloudflare API tokens only if direct upload, Wrangler automation, or DNS changes will be performed through the API.
+- [ ] Keep production deployment tokens and deployment-control secrets out of GitHub Actions.
 - [ ] Document token rotation and emergency revocation.
 - [ ] Pin and document the Wrangler compatibility date and compatibility flags.
 - [ ] Configure budget or usage alerts.
@@ -49,9 +55,8 @@ These are human-owned account and production-safety tasks. Coding agents may doc
 
 - [ ] Create a `main` ruleset after CI checks exist.
 - [ ] Require pull requests and required checks, with an explicit owner bypass policy.
-- [ ] Create separate staging and production GitHub environments.
-- [ ] Require production approval if desired.
 - [ ] Ensure workflow tokens and third-party actions use least privilege.
+- [ ] Keep GitHub Actions CI-only and out of the deployment credential path.
 
 ## Recovery and operations
 
