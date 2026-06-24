@@ -43,6 +43,7 @@ This decision supersedes ADR 0008.
 - Nitro provides one server runtime model for HTTP routes, bindings, queues, and scheduled work.
 - Runtime compatibility must still be tested for Better Auth, Drizzle, Neon, Sentry, and image processing.
 - Local Nuxt success alone does not prove production compatibility.
+- Repository checks validate the application build and runtime seams, but Cloudflare Pages project settings must still be confirmed during external provisioning.
 - Cloudflare Pages deployment controls include Git integration, branch control, and rollback to a previous successful production deployment.
 - Preview deployments are not valid rollback targets.
 - Cloudflare runtime limits and pricing remain application constraints.

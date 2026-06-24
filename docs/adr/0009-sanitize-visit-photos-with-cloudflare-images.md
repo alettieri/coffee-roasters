@@ -8,13 +8,13 @@ Accepted
 
 ## Context
 
-ADR 0007 requires every Visit Photo to be decoded and re-encoded so hidden metadata, including GPS coordinates, is not preserved. ADR 0022 deploys the application to Cloudflare Workers, where native Node.js image-processing libraries cannot be assumed to work.
+ADR 0007 requires every Visit Photo to be decoded and re-encoded so hidden metadata, including GPS coordinates, is not preserved. ADR 0022 deploys the application through Cloudflare, where native Node.js image-processing libraries cannot be assumed to work.
 
 The application needs a Worker-compatible image pipeline that can validate uploaded content, constrain dimensions, remove metadata, and write sanitized image bytes to the private R2 bucket.
 
 ## Decision
 
-Use Cloudflare Images transformations from Cloudflare Workers to sanitize Visit Photos before canonical storage in R2.
+Use Cloudflare Images transformations from the Cloudflare runtime to sanitize Visit Photos before canonical storage in R2.
 
 The upload pipeline will:
 
@@ -41,7 +41,7 @@ Cloudflare Images is used as a transformation capability, not as the source of t
 
 ## Consequences
 
-- Photo processing remains compatible with the Cloudflare Workers runtime.
+- Photo processing remains compatible with the Cloudflare runtime.
 - Hidden metadata removal becomes an explicit, testable step.
 - Canonical photos can be normalized to predictable formats and bounded dimensions.
 - The application becomes more dependent on Cloudflare's image transformation APIs and pricing.

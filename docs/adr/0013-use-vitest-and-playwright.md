@@ -10,7 +10,7 @@ Accepted
 
 The PRD calls for tests at user-visible behavior seams, including unauthenticated Public Discovery, inclusion boundaries, private Journal ownership, repeat Visits, required Roaster Locations, Visit Photo privacy and metadata removal, Suggestions, and administrative review.
 
-The application runs on Cloudflare Workers through Nitro's Cloudflare Workers preset. Tests that execute only in Nuxt's standard development environment cannot verify production runtime compatibility.
+The application runs in Cloudflare's deployment runtime through Nitro. Tests that execute only in Nuxt's standard development environment cannot verify production runtime compatibility.
 
 ## Decision
 

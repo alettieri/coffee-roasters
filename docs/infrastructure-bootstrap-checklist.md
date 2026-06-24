@@ -25,6 +25,7 @@ These are human-owned account and production-safety tasks. Coding agents may doc
 - [ ] Configure preview and production Pages variables, secrets, and bindings separately.
 - [ ] Document the disable-automatic-deployments controls for production and preview branches.
 - [ ] Document the Pages rollback path from deployment history.
+- [ ] Confirm the external Pages project settings during provisioning because repository checks do not validate Cloudflare account configuration.
 - [ ] Create separate least-privilege Cloudflare API tokens only if direct upload, Wrangler automation, or DNS changes will be performed through the API.
 - [ ] Keep production deployment tokens and deployment-control secrets out of GitHub Actions.
 - [ ] Document token rotation and emergency revocation.
