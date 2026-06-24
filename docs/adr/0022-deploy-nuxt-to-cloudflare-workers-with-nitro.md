@@ -14,7 +14,7 @@ Nitro provides a Cloudflare Workers module preset, local Cloudflare emulation, a
 
 ## Decision
 
-Deploy the Nuxt application to Cloudflare Workers using Nitro's `cloudflare_module` preset and Wrangler.
+Deploy the Nuxt application to Cloudflare Workers using Nitro's `cloudflare_pages` preset and Wrangler.
 
 The implementation will:
 
