@@ -8,7 +8,7 @@ import {
 import { verifyDatabaseConnection } from '../../server/platform/database/health';
 
 const testDatabaseUrl =
-  process.env.TEST_DATABASE_URL ??
+  process.env.DATABASE_URL ??
   'postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test';
 
 const deterministicTimestamp = '2026-06-23T12:00:00.000Z';

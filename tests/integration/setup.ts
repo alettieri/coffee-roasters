@@ -5,9 +5,12 @@ import {
   createDatabaseClient,
   type DatabaseClient,
 } from '../../server/platform/database/client';
+import { loadEnvironmentFile } from '../../scripts/environment/load-env-file';
+
+loadEnvironmentFile();
 
 const testDatabaseUrl =
-  process.env.TEST_DATABASE_URL ??
+  process.env.DATABASE_URL ??
   'postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test';
 
 let client: DatabaseClient | undefined;

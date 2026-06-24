@@ -33,13 +33,18 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 
 Local development uses Docker PostgreSQL 17, matching the project-selected Neon major version. The Docker database uses disposable local-only credentials from `docker-compose.yml`; do not copy staging or production credentials into local files.
 
-Create a local `.env` with server-only database URLs before starting Nuxt or applying migrations:
+Create a local `.env` with server-only database URLs before starting Nuxt or applying development migrations:
 
 ```sh
 DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_dev
 MIGRATION_DATABASE_URL=postgres://coffee_roasters:coffee_roasters_local@localhost:54329/coffee_roasters_dev
-TEST_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test
-TEST_MIGRATION_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test
+```
+
+Create a local `.env.test` for integration-test commands:
+
+```sh
+DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test
+MIGRATION_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test
 ```
 
 Database commands:
@@ -51,7 +56,7 @@ Database commands:
 - `pnpm db:integration:start` starts an ephemeral integration-test PostgreSQL container and waits for its healthcheck.
 - `pnpm db:integration:stop` stops the integration-test PostgreSQL container and deletes its volume.
 - `pnpm db:integration:reset` recreates the integration-test PostgreSQL container from an empty volume.
-- `pnpm db:migrate:integration` applies checked-in Drizzle migrations to the integration-test database.
+- `pnpm db:migrate:integration` applies checked-in Drizzle migrations to the integration-test database using `.env.test`.
 - `pnpm db:generate` generates reviewable Drizzle migrations from `server/platform/database/schema.ts`.
 - `pnpm test:integration` resets the ephemeral integration database, applies migrations, and verifies database health, writes, reads, transactions, and cleanup against `coffee_roasters_test`.
 

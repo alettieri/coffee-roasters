@@ -11,7 +11,7 @@
     "db:integration:start": "docker compose -p coffee-roasters-integration -f docker-compose.integration.yml up -d --wait postgres-integration",
     "db:integration:stop": "docker compose -p coffee-roasters-integration -f docker-compose.integration.yml down --volumes --remove-orphans",
     "db:migrate": "tsx scripts/database/migrate.ts",
-    "db:migrate:integration": "tsx scripts/database/migrate-integration.ts",
+    "db:migrate:integration": "env -u DATABASE_URL -u MIGRATION_DATABASE_URL ENV_FILE=.env.test tsx scripts/database/migrate.ts",
     "db:reset": "docker compose down --volumes --remove-orphans && docker compose up -d --wait postgres && pnpm db:migrate",
     "db:start": "docker compose up -d --wait postgres",
     "db:stop": "docker compose down",
@@ -22,7 +22,7 @@
     "lint:fix": "nuxt prepare && eslint . --fix",
     "postinstall": "nuxt prepare",
     "test": "pnpm test:unit",
-    "test:integration": "pnpm db:integration:reset && TEST_MIGRATION_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test pnpm db:migrate:integration && TEST_DATABASE_URL=postgres://coffee_roasters_integration:coffee_roasters_integration@localhost:54330/coffee_roasters_test vitest run --config vitest.integration.config.ts",
+    "test:integration": "pnpm db:integration:reset && pnpm db:migrate:integration && env -u DATABASE_URL -u MIGRATION_DATABASE_URL ENV_FILE=.env.test vitest run --config vitest.integration.config.ts",
     "test:unit": "vitest run tests/unit",
     "test:watch": "vitest",
     "typecheck": "nuxt typecheck"
