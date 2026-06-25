@@ -13,7 +13,7 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 - Nuxt ESLint, ESLint 10, Prettier 3, Vitest 4, and Wrangler 4
 - PostgreSQL through Drizzle ORM
 - Docker PostgreSQL locally and Neon when deployed
-- Cloudflare Pages with Nitro's `cloudflare_pages` preset, plus Hyperdrive, R2, Images, Queues, and Cron Triggers
+- Cloudflare Pages with Nitro's `cloudflare_pages` preset, Wrangler direct upload, and production Hyperdrive
 - Better Auth, Resend, Sentry, Vitest, Playwright, and GitHub Actions
 
 ## Repository commands
@@ -74,6 +74,18 @@ GitHub Actions runs credential-free CI for pull requests targeting `main` and pu
 The workflow does not use `pull_request_target`, GitHub environments, deployment credentials, or Cloudflare, Neon, Resend, Sentry, production, or staging secrets. The pnpm store cache is keyed by `pnpm-lock.yaml`; `node_modules` is not cached.
 
 Dependabot security updates and repository ruleset setup remain human-owned repository configuration tracked by GitHub issue #18.
+
+## Production deployment planning
+
+Production is the only required deployed environment. Preview deployments are future optional infrastructure.
+
+The planned production path is: CI succeeds on `main`, checked-in Drizzle migrations run against Neon with a direct migration credential, failed migrations block build and upload, `pnpm build` produces `dist/`, Wrangler direct upload publishes `dist/`, and smoke tests run against production. The upload command is shaped like:
+
+```sh
+pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"
+```
+
+Runtime traffic uses production Hyperdrive with a least-privilege application database role. The direct Neon migration credential must not be available to Pages runtime code. R2, Images, Queues, and Cron remain deferred until their product slices need them.
 
 ## Before contributing
 

@@ -8,24 +8,26 @@ Accepted
 
 ## Context
 
-The application spans Nuxt, Neon PostgreSQL, R2, Cloudflare Images, Queues, Cron Triggers, Better Auth, and Resend. Failures may occur in browser interactions, server rendering, authenticated application operations, asynchronous photo processing, or scheduled cleanup.
+The application spans Nuxt, Neon PostgreSQL, Better Auth, Resend, and planned Cloudflare services such as R2, Images, Queues, and Cron Triggers. Required production observability initially covers Pages deployment and runtime health, Sentry application errors, release identifiers, smoke tests, and database/runtime connectivity.
 
 The product contains private Journal text, Visit Photos, authentication data, presigned object URLs, and internal curation notes. Observability must help diagnose failures without becoming another store for sensitive content.
 
 ## Decision
 
-Use Sentry for application error reporting and performance tracing. Use Cloudflare's native logs, metrics, and platform observability for R2 bindings, Queues, Cron Triggers, and deployment/runtime health.
+Use Sentry for application error reporting and performance tracing. Use Cloudflare's native logs, metrics, and platform observability for Pages deployment/runtime health. Add R2, Images, Queues, and Cron telemetry when those product slices provision the resources.
 
 The implementation will:
 
 - capture unhandled browser and server-side application errors in Sentry;
-- add explicit error reporting around critical authentication, database, photo-processing, email, and administrative workflows;
-- correlate application errors with Cloudflare request and queue identifiers where practical;
-- monitor queue retries, dead-letter or terminal failures, scheduled-job outcomes, platform errors, and latency through Cloudflare telemetry;
-- use environment and release identifiers to distinguish local, staging, and production events;
+- add explicit error reporting around critical authentication, database, email, and administrative workflows;
+- correlate application errors with Cloudflare request identifiers where practical;
+- monitor platform errors and latency through Cloudflare telemetry;
+- use environment and release identifiers to distinguish local, CI, optional preview, and production events;
 - configure source maps securely for actionable stack traces;
 - sample performance traces to control cost and data volume; and
-- define alerts for sustained authentication failures, elevated server errors, photo-processing failure rates, queue backlog, and cleanup failures.
+- define required production alerts for failed smoke tests, elevated server errors, sustained authentication failures, database/runtime health failures, and Pages deployment or runtime failures.
+
+R2, Images, Queues, Cron, Visit Photo processing, queue backlog, dead-letter handling, and scheduled cleanup observability are deferred until those product slices require their Cloudflare bindings.
 
 Telemetry must not include:
 

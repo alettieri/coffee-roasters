@@ -2,12 +2,10 @@
 
 ## Knowledge
 
-- [Cloudflare Pages: Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/)
-  Primary reference for production and preview branch behavior, branch control, and Git-connected deployments.
+- [Cloudflare Pages: Direct Upload with Wrangler](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/)
+  Primary reference for GitHub Actions based Pages direct upload with Wrangler.
 - [Cloudflare Pages: Rollbacks](https://developers.cloudflare.com/pages/configuration/rollbacks/)
   Primary reference for restoring a previous successful production deployment.
-- [Cloudflare Pages: Set build commands per branch](https://developers.cloudflare.com/pages/how-to/build-commands-branches/)
-  Primary reference for `CF_PAGES_BRANCH`-driven build wrappers and branch-specific build overrides.
 - [Nitro: Cloudflare deployment](https://nitro.build/deploy/providers/cloudflare)
   Primary reference for the `cloudflare_pages` preset, local `wrangler pages dev`, runtime hooks, and environment variables.
 - [Nuxt: Deploy to Cloudflare](https://nuxt.com/deploy/cloudflare)
@@ -15,7 +13,7 @@
 - [Cloudflare runtime development and testing](https://developers.cloudflare.com/workers/development-testing/)
   Primary reference for local `workerd` behavior, bindings, and production-representative runtime testing.
 - [Neon: Branching](https://neon.com/docs/introduction/branching)
-  Primary reference for isolated copy-on-write PostgreSQL branches used by preview, migration-verification, and production workflows.
+  Primary reference for isolated copy-on-write PostgreSQL branches used by migration-verification, recovery, and optional future preview workflows.
 - [Docker: PostgreSQL container image](https://hub.docker.com/_/postgres)
   Primary reference for configuring the pinned PostgreSQL container used during daily local development and integration tests.
 
