@@ -107,13 +107,13 @@ account allowance are not an architectural decision in this document.
 
 These are planning estimates, not provider quotes.
 
-| Service             |              Single user | Early public use |               Modest growth |
-| ------------------- | -----------------------: | ---------------: | --------------------------: |
-| Cloudflare Pages    | $0 free / $5 recommended |               $5 |                      $5–$10 |
-| Neon                |                       $0 |           $0–$15 |                     $15–$30 |
-| Resend              |                       $0 |               $0 |                      $0–$20 |
+| Service             |              Single user | Early public use |                   Modest growth |
+| ------------------- | -----------------------: | ---------------: | ------------------------------: |
+| Cloudflare Pages    | $0 free / $5 recommended |               $5 |                          $5–$10 |
+| Neon                |                       $0 |           $0–$15 |                         $15–$30 |
+| Resend              |                       $0 |               $0 |                          $0–$20 |
 | Sentry              |                       $0 |               $0 | $0 unless a team plan is needed |
-| **Estimated total** |                **$0–$5** |        **$5–$20** |                 **$20–$60** |
+| **Estimated total** |                **$0–$5** |       **$5–$20** |                     **$20–$60** |
 
 ### Single user
 
