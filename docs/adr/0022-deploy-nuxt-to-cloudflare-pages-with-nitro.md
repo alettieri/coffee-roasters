@@ -8,15 +8,27 @@ Accepted
 
 ## Context
 
-ADR 0021 selects Nuxt. The application still needs server rendering, authenticated server operations, protected administration, and Neon connectivity in the Cloudflare deployment runtime.
+ADR 0021 selects Nuxt. The application still needs server rendering,
+authenticated server operations, protected administration, and Neon
+connectivity in the Cloudflare deployment runtime.
 
-Nitro provides a `cloudflare_pages` preset, local Cloudflare emulation, and access to bindings through the request event. This removes the OpenNext compatibility layer required by the superseded Next.js deployment decision.
+Nitro provides a `cloudflare_pages` preset, local Cloudflare emulation,
+and access to bindings through the request event. This removes the
+OpenNext compatibility layer required by the superseded Next.js
+deployment decision.
 
-Issue #5 narrows initial deployment planning to production-only Cloudflare Pages delivery. Preview deployments, staging deployments, R2, Images, Queues, and Cron Triggers remain future product-slice work until an issue explicitly authorizes their infrastructure planning or provisioning.
+Issue #5 narrows initial deployment planning to production-only
+Cloudflare Pages delivery. Preview deployments, staging deployments,
+R2, Images, Queues, and Cron Triggers remain future product-slice work
+until an issue explicitly authorizes their infrastructure planning or
+provisioning.
 
 ## Decision
 
-Deploy the Nuxt application to Cloudflare Pages using Nitro's `cloudflare_pages` preset and Wrangler direct upload. Do not use Cloudflare Pages Git integration for the required production deployment path.
+Deploy the Nuxt application to Cloudflare Pages using Nitro's
+`cloudflare_pages` preset and Wrangler direct upload. Do not use
+Cloudflare Pages Git integration for the required production deployment
+path.
 
 The implementation will:
 
@@ -30,7 +42,9 @@ The implementation will:
 - verify production builds in the `workerd` runtime; and
 - pin and deliberately upgrade Nuxt, Nitro, Wrangler, and the Pages deployment configuration.
 
-The default build command is `pnpm build`, which runs `nuxt build` with Nitro's `cloudflare_pages` preset. The Pages build output directory is `dist/`.
+The default build command is `pnpm build`, which runs `nuxt build`
+with Nitro's `cloudflare_pages` preset. The Pages build output
+directory is `dist/`.
 
 The planned production upload command shape is:
 
@@ -38,9 +52,17 @@ The planned production upload command shape is:
 pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"
 ```
 
-The production deployment workflow will run from GitHub Actions after required CI succeeds on `main`. It must run checked-in Drizzle migrations against Neon through the direct production migration credential before the Wrangler upload. Failed migrations block the upload.
+The production deployment workflow will run from GitHub Actions after
+required CI succeeds on `main`. It must run checked-in Drizzle
+migrations against Neon through the direct production migration
+credential before the Wrangler upload. Failed migrations block the
+upload.
 
-Runtime traffic must use the production Hyperdrive binding and a least-privilege production application database role. The direct Neon migration credential must be available only to the controlled migration step and must not be exposed to Pages runtime code, client code, pull request workflows, logs, or build artifacts.
+Runtime traffic must use the production Hyperdrive binding and a
+least-privilege production application database role. The direct Neon
+migration credential must be available only to the controlled migration
+step and must not be exposed to Pages runtime code, client code, pull
+request workflows, logs, or build artifacts.
 
 Production deployment configuration uses this no-values naming contract:
 
@@ -62,7 +84,10 @@ Production deployment configuration uses this no-values naming contract:
 | `PRODUCTION_SMOKE_HEALTH_URL` | GitHub Actions variable | smoke-test step | Public or synthetic health-check URL. |
 | `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | GitHub Actions variable | smoke-test step | Public Discovery smoke-test URL that uses no private data. |
 
-Rollback uses Cloudflare Pages deployment history to restore a prior successful production deployment. Database rollback must not be assumed; migrations must be forward-compatible and recovery must use a separate, explicit database restore plan when needed.
+Rollback uses Cloudflare Pages deployment history to restore a prior
+successful production deployment. Database rollback must not be
+assumed; migrations must be forward-compatible and recovery must use a
+separate, explicit database restore plan when needed.
 
 Dependencies requiring unsupported native Node.js behavior must be replaced, isolated, or covered by a separate decision.
 
@@ -72,10 +97,17 @@ This decision supersedes ADR 0008.
 
 - Nuxt has a direct Cloudflare deployment path without OpenNext.
 - Nitro provides one server runtime model for HTTP routes and Cloudflare bindings.
-- Runtime compatibility must still be tested for Better Auth, Drizzle, Neon, and Sentry. R2, Images, Queues, and Cron compatibility return when those product slices are implemented.
+- Runtime compatibility must still be tested for Better Auth, Drizzle,
+  Neon, and Sentry. R2, Images, Queues, and Cron compatibility return
+  when those product slices are implemented.
 - Local Nuxt success alone does not prove production compatibility.
-- Repository checks validate the application build and runtime seams, but Cloudflare Pages project settings, production variables, secrets, and bindings must still be confirmed during external provisioning.
+- Repository checks validate the application build and runtime seams,
+  but Cloudflare Pages project settings, production variables, secrets,
+  and bindings must still be confirmed during external provisioning.
 - GitHub Actions becomes the planned production deployment coordinator after main-branch CI succeeds.
-- Cloudflare Pages deployment controls include direct-upload deployment history and rollback to a previous successful production deployment.
-- Preview deployments are optional future infrastructure and are not valid production rollback targets.
+- Cloudflare Pages deployment controls include direct-upload
+  deployment history and rollback to a previous successful production
+  deployment.
+- Preview deployments are optional future infrastructure and are not
+  valid production rollback targets.
 - Cloudflare runtime limits and pricing remain application constraints.

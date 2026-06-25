@@ -1,6 +1,8 @@
 # Infrastructure Bootstrap Checklist
 
-These are human-owned account and production-safety tasks. Coding agents may document or verify them but must not perform them without explicit authorization and credentials.
+These are human-owned account and production-safety tasks. Coding
+agents may document or verify them but must not perform them without
+explicit authorization and credentials.
 
 ## Account security
 
@@ -13,9 +15,12 @@ These are human-owned account and production-safety tasks. Coding agents may doc
 ## Naming and inventory
 
 - [ ] Use the `coffee-roasters-production` prefix for required deployed resources.
-- [ ] Treat preview and staging prefixes as future optional infrastructure until a specific issue authorizes them.
-- [ ] Maintain an inventory of Pages, Hyperdrive, Neon, domain, Resend, Sentry, and GitHub environment identifiers.
-- [ ] Add R2, Images, Queue, and Cron identifiers only when their product slices authorize those resources.
+- [ ] Treat preview and staging prefixes as future optional
+  infrastructure until a specific issue authorizes them.
+- [ ] Maintain an inventory of Pages, Hyperdrive, Neon, domain, Resend,
+  Sentry, and GitHub environment identifiers.
+- [ ] Add R2, Images, Queue, and Cron identifiers only when their
+  product slices authorize those resources.
 - [ ] Record region, purpose, owner, creation date, and deletion policy for each resource.
 
 ## Production deployment name contract
@@ -43,19 +48,26 @@ Record these names without values:
 ## Cloudflare
 
 - [ ] Confirm the Cloudflare account and production DNS zone.
-- [ ] Create the production Cloudflare Pages project without relying on Pages Git integration for required deployment.
+- [ ] Create the production Cloudflare Pages project without relying on
+  Pages Git integration for required deployment.
 - [ ] Record the production Pages project name and production branch.
 - [ ] Record the build command `pnpm build` and output directory `dist/`.
-- [ ] Record the planned direct-upload command shape: `pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"`.
+- [ ] Record the planned direct-upload command shape: `pnpm wrangler
+  pages deploy dist/ --project-name <production-pages-project> --branch
+  main --commit-hash "$GITHUB_SHA"`.
 - [ ] Configure production Pages variables, secrets, and bindings.
 - [ ] Record the production Hyperdrive binding name.
-- [ ] Record runtime application variable and secret names from the production deployment name contract without values.
+- [ ] Record runtime application variable and secret names from the
+  production deployment name contract without values.
 - [ ] Defer R2, Images, Queues, and Cron bindings until product slices authorize them.
 - [ ] Document how to pause or disable production deployment from GitHub Actions.
 - [ ] Document the Pages rollback path from production deployment history.
-- [ ] Confirm the external Pages project settings during provisioning because repository checks do not validate Cloudflare account configuration.
+- [ ] Confirm the external Pages project settings during provisioning
+  because repository checks do not validate Cloudflare account
+  configuration.
 - [ ] Create a least-privilege Cloudflare API token for Wrangler direct upload.
-- [ ] Store the Cloudflare API token name in GitHub Actions production deployment configuration without checking in its value.
+- [ ] Store the Cloudflare API token name in GitHub Actions production
+  deployment configuration without checking in its value.
 - [ ] Document token rotation and emergency revocation.
 - [ ] Pin and document the Wrangler compatibility date and compatibility flags.
 - [ ] Configure budget or usage alerts.
@@ -66,9 +78,12 @@ Record these names without values:
 - [ ] Create the production branch or project.
 - [ ] Create separate application and migration roles.
 - [ ] Grant the production application role only the permissions runtime code needs.
-- [ ] Grant the production migration role schema-change permissions needed by checked-in Drizzle migrations.
-- [ ] Store the direct Neon migration credential only in the production deployment workflow configuration, unavailable to runtime code.
-- [ ] Configure production Hyperdrive for runtime traffic using the least-privilege application role.
+- [ ] Grant the production migration role schema-change permissions
+  needed by checked-in Drizzle migrations.
+- [ ] Store the direct Neon migration credential only in the production
+  deployment workflow configuration, unavailable to runtime code.
+- [ ] Configure production Hyperdrive for runtime traffic using the
+  least-privilege application role.
 - [ ] Define recovery-point and recovery-time objectives.
 - [ ] Confirm the available point-in-time restore window.
 - [ ] Restore into a separate branch and verify recovery before storing meaningful Journal data.
@@ -89,7 +104,8 @@ Record these names without values:
 - [ ] Require pull requests and required checks, with an explicit owner bypass policy.
 - [ ] Ensure workflow tokens and third-party actions use least privilege.
 - [ ] Create protected production deployment configuration before adding the deployment workflow.
-- [ ] Use the production deployment name contract for required production variable, secret, binding, and release identifier names.
+- [ ] Use the production deployment name contract for required
+  production variable, secret, binding, and release identifier names.
 - [ ] Plan deployment only after CI succeeds on `main`.
 - [ ] Plan production deployment concurrency so one migration/upload runs at a time.
 - [ ] Keep pull request workflows credential-free.
@@ -97,7 +113,8 @@ Record these names without values:
 ## Recovery and operations
 
 - [ ] Document application rollback without destructive database rollback.
-- [ ] Document production smoke tests that use public or synthetic checks and no private production data.
+- [ ] Document production smoke tests that use public or synthetic
+  checks and no private production data.
 - [ ] Document credential rotation and account-loss recovery.
 - [ ] Verify structured logs and sensitive-data redaction before authentication is deployed.
 - [ ] Add Sentry before private Journal data reaches production.
