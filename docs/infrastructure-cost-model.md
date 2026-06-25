@@ -5,12 +5,13 @@ Date: June 20, 2026
 This estimate covers the selected deployed infrastructure:
 
 - Nuxt and Nitro on Cloudflare Pages with Hyperdrive
-- Cloudflare R2, Images, Queues, and Cron Triggers
 - PostgreSQL on Neon
 - Better Auth using the application database
 - transactional email through Resend
 - Sentry application observability
 - GitHub Actions CI/CD
+
+R2, Images, Queues, and Cron Triggers are deferred until their product slices authorize them. Their pricing remains useful for future planning, but they are not part of the required production-only deployment baseline.
 
 It excludes domain registration, taxes, paid support, developer AI tools, and local electricity or hardware. Prices are current as of the date above and should be checked before launch or plan changes.
 
@@ -90,21 +91,16 @@ These are planning estimates, not provider quotes.
 | Service             |              Single user | Early public use |                   Modest growth |
 | ------------------- | -----------------------: | ---------------: | ------------------------------: |
 | Cloudflare Pages    | $0 free / $5 recommended |               $5 |                          $5–$10 |
-| R2                  |                       $0 |     Less than $1 |                           $2–$5 |
-| Images              |                       $0 |            $0–$3 |                          $5–$15 |
-| Queues and Cron     |                       $0 |               $0 |                    Less than $1 |
 | Neon                |                       $0 |           $0–$15 |                         $15–$30 |
 | Resend              |                       $0 |               $0 |                          $0–$20 |
 | Sentry              |                       $0 |               $0 | $0 unless a team plan is needed |
-| **Estimated total** |                **$0–$5** |       **$5–$24** |                     **$27–$81** |
+| **Estimated total** |                **$0–$5** |        **$5–$20** |                     **$20–$60** |
 
 ### Single user
 
 Assumptions:
 
 - fewer than 100,000 Cloudflare Pages requests per day;
-- fewer than 5,000 photo transformations per month;
-- less than 10 GB of R2 storage;
 - intermittent database use under 100 CU-hours and 0.5 GB;
 - negligible authentication email; and
 - one Sentry user.
@@ -116,39 +112,35 @@ Recommended budget: **$5/month**, using the paid Cloudflare compute plan for mor
 Assumptions:
 
 - fewer than 10 million dynamic Cloudflare Pages requests per month;
-- up to roughly 10,000 Visit Photo uploads per month;
-- less than 50 GB stored in R2;
 - intermittent PostgreSQL load;
 - fewer than 3,000 transactional emails per month; and
 - one operator.
 
-Expected budget: **approximately $5–$24/month**. The range is primarily determined by whether Neon Free remains adequate and how many image transformations exceed the free allowance.
+Expected budget: **approximately $5–$20/month**. The range is primarily determined by whether Neon Free remains adequate.
 
 ### Modest growth
 
 Assumptions:
 
 - Pages traffic remains near or moderately above the included paid allowance;
-- tens of thousands of Visit Photo uploads per month;
-- 100–300 GB in R2;
 - Neon Launch with intermittent or low sustained load;
 - possible Resend Pro usage; and
 - still one application operator.
 
-Expected budget: **approximately $27–$81/month**. Neon compute and transactional email become more important than object storage or Queue operations.
+Expected budget: **approximately $20–$60/month**. Neon compute and transactional email are the main expected variables.
 
 ## Operational Review
 
 ### Strengths
 
-- One Cloudflare account operates Pages compute, object storage, image processing, queues, schedules, edge caching, and platform logs.
+- One Cloudflare account operates Pages compute, edge caching, and platform logs for the required production deployment.
 - Hyperdrive provides the deployed Pages-to-Neon connection and pooling boundary while migrations use a direct Neon connection.
 - Nitro has a direct Cloudflare Pages target, avoiding an additional deployment adapter.
 - PostgreSQL remains standard and portable despite Neon hosting.
 - Better Auth avoids a separate per-user identity bill.
 - Docker keeps daily database development independent of Neon availability and billing.
 - Every major service has an adequate entry tier for a one-user project.
-- TypeScript, checked-in Drizzle migrations, Cloudflare Pages configuration, and GitHub Actions provide explicit artifacts that coding agents can inspect and verify.
+- TypeScript, checked-in Drizzle migrations, Cloudflare Pages configuration, Wrangler direct upload, and GitHub Actions provide explicit artifacts that coding agents can inspect and verify.
 
 ### Main risks
 
@@ -161,14 +153,14 @@ Expected budget: **approximately $27–$81/month**. Neon compute and transaction
 3. **Neon free-plan production behavior**
    Scale-to-zero and free quotas are acceptable for personal use but may create cold starts or exhaustion as public traffic grows.
 
-4. **Cloudflare Images semantics**
-   Calls through the Images binding count as transformations. Retry loops and accidental repeated processing need idempotency and monitoring.
+4. **Deferred photo infrastructure**
+   R2, Images, Queues, and Cron costs return when Visit Photo product slices provision those resources.
 
 5. **Provider concentration**
-   Cloudflare Pages failure affects compute, photos, queues, and processing together. This is accepted because consolidated operation is valuable for a one-person project.
+   Cloudflare Pages failure affects the required application deployment. This is accepted because consolidated operation is valuable for a one-person project.
 
 6. **Preview-environment sprawl**
-   Stale Neon branches and Cloudflare resources can create cost and confusion. Preview resources need expiration and cleanup.
+   Preview resources are not required initially. If added later, stale Neon branches and Cloudflare resources need expiration and cleanup.
 
 ## Recommendation
 
@@ -178,12 +170,12 @@ For the initial single-user deployment:
 
 - use the relevant Cloudflare Pages paid compute plan if the application is intended to remain reliably available;
 - remain on Neon Free until storage, availability, or measured compute usage justifies Launch;
-- use the free R2, Images, Queues, Resend, and Sentry allowances;
+- use the free Resend and Sentry allowances;
+- defer R2, Images, Queues, and Cron until product slices authorize them;
 - configure budget alerts in Cloudflare, Neon, Resend, Sentry, and GitHub;
-- cap or alert on photo upload volume and processing failures; and
 - review actual usage after the first full month before changing any plan.
 
-The realistic initial infrastructure budget is **$5/month plus domain registration**. The stack should remain below roughly **$25/month** through early public use if database usage remains intermittent.
+The realistic initial infrastructure budget is **$5/month plus domain registration**. The stack should remain near or below roughly **$20/month** through early public use if database usage remains intermittent.
 
 ## Official Pricing Sources
 

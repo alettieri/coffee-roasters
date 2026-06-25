@@ -63,7 +63,8 @@ Domain modules must not depend on Vue, Nuxt, Nitro request events, or provider S
 - Drizzle schema declarations and generated SQL migrations are committed.
 - Review generated SQL before committing it.
 - Never edit a migration that has been applied outside a disposable local or CI database.
-- Production and staging use migration commands, never schema push or synchronization.
+- Production uses migration commands, never schema push or synchronization.
+- Preview or staging environments, if added later, use migration commands, never schema push or synchronization.
 - Use forward-compatible expand/contract changes for deployed databases.
 - Handwritten SQL belongs in an explained migration when Drizzle cannot express the required constraint or operation.
 - Runtime application credentials do not own the schema. Migration credentials are separate.
@@ -80,17 +81,18 @@ Domain modules must not depend on Vue, Nuxt, Nitro request events, or provider S
 | ----------- | ----------------------------------------------- | ------------------------------ | ------------------------------------- |
 | Local       | Nuxt development and local Cloudflare emulation | Docker PostgreSQL              | No production services                |
 | CI          | GitHub-hosted runner                            | Disposable PostgreSQL service  | No deployment credentials             |
-| Staging     | Cloudflare Pages preview deployment             | Isolated Neon staging branch   | Staging-only secrets and resources    |
 | Production  | Cloudflare Pages production deployment          | Neon production branch/project | Production-only secrets and resources |
 
-Use one shared staging environment initially. Do not create per-PR Cloudflare or Neon environments until parallel development creates a measured need.
+Production is the only required deployed environment. Preview and staging environments are future optional infrastructure; do not create per-PR, preview, or staging Cloudflare or Neon resources until a specific issue authorizes them.
+
+The planned production deployment path is GitHub Actions after required CI succeeds on `main`, then direct Neon migrations, then Wrangler direct upload to Cloudflare Pages. Failed migrations block upload. Runtime traffic uses production Hyperdrive and a least-privilege application role; the direct Neon migration credential must not be available to runtime code.
 
 ## Test layers
 
 - Pull requests: formatting, linting, type checking, unit tests, local database integration tests, and production build.
 - Main or relevant runtime changes: local `workerd` acceptance tests.
-- Release or provider-sensitive changes: bounded tests against staging Cloudflare and Neon resources.
-- Cloudflare Images metadata-removal tests require canonical-output inspection in a real staging integration because local emulation is not fully equivalent.
+- Release or provider-sensitive changes: bounded human-gated checks against the deployed production path or a separately authorized preview environment.
+- Cloudflare Images metadata-removal tests require canonical-output inspection in a real Cloudflare integration after the Visit Photo product slice provisions Images and R2, because local emulation is not fully equivalent.
 
 Tests use deterministic clocks and identifiers where behavior depends on them, isolated database state, explicit two-account privacy fixtures, and synthetic security fixtures. Do not derive fixtures from production.
 
@@ -101,3 +103,4 @@ Tests use deterministic clocks and identifiers where behavior depends on them, i
 - GitHub workflow jobs declare minimum permissions, timeouts, and concurrency behavior.
 - Do not use `pull_request_target` with untrusted checkout.
 - Dependency updates must pass the same checks as application changes.
+- Production deployment workflows, once added, must use protected production credentials, Wrangler direct upload, release identifiers, rollback documentation, and smoke tests without exposing secrets or private data.

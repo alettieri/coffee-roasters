@@ -16,7 +16,7 @@ Using a Neon development branch would reduce local setup, but it would require n
 
 Run PostgreSQL in Docker for daily local development and local integration tests.
 
-Use Neon branches for preview, migration verification, and production environments.
+Use Neon for production and for temporary migration-verification or recovery branches when useful. Preview or staging branches are future optional infrastructure under ADR 0036.
 
 The local setup will:
 
@@ -29,7 +29,7 @@ The local setup will:
 - verify required PostgreSQL extensions in both Docker and Neon; and
 - run checked-in Drizzle migrations in every environment.
 
-Before deployment, migrations must also be verified against an isolated Neon branch. Local Docker success alone is not sufficient proof of provider compatibility.
+Before deployment, migrations must run through the direct Neon production migration credential. For risky migrations, first verify against an isolated temporary Neon branch. Local Docker success alone is not sufficient proof of provider compatibility.
 
 ## Consequences
 
@@ -38,4 +38,4 @@ Before deployment, migrations must also be verified against an isolated Neon bra
 - Contributors must install and run Docker.
 - The project must maintain Docker Compose configuration and local volumes.
 - PostgreSQL version, extensions, connection behavior, and operational limits may differ from Neon.
-- Preview and release checks retain a real Neon compatibility gate.
+- Release checks retain a real Neon compatibility gate.
