@@ -49,7 +49,7 @@ directory is `dist/`.
 The planned production upload command shape is:
 
 ```sh
-pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"
+pnpm exec wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$APP_RELEASE"
 ```
 
 The production deployment workflow will run from GitHub Actions after
@@ -66,23 +66,23 @@ request workflows, logs, or build artifacts.
 
 Production deployment configuration uses this no-values naming contract:
 
-| Name                                     | Kind                                                  | Available to                          | Purpose                                                                            |
-| ---------------------------------------- | ----------------------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
-| `CLOUDFLARE_ACCOUNT_ID`                  | GitHub Actions variable                               | production deployment workflow        | Selects the Cloudflare account for Wrangler direct upload.                         |
-| `CLOUDFLARE_PAGES_PROJECT_NAME`          | GitHub Actions variable                               | production deployment workflow        | Selects the production Pages project.                                              |
-| `CLOUDFLARE_API_TOKEN`                   | GitHub Actions secret                                 | production deployment workflow        | Least-privilege token for Wrangler direct upload.                                  |
-| `NEON_PRODUCTION_MIGRATION_DATABASE_URL` | GitHub Actions secret                                 | migration step only                   | Direct Neon connection for checked-in Drizzle migrations.                          |
-| `PRODUCTION_HYPERDRIVE`                  | Cloudflare Pages binding                              | Pages runtime                         | Production Hyperdrive connection used by application traffic.                      |
-| `NEON_PRODUCTION_APP_ROLE`               | inventory role name                                   | Pages runtime through Hyperdrive      | Least-privilege production database role for application queries and transactions. |
-| `NEON_PRODUCTION_MIGRATION_ROLE`         | inventory role name                                   | migration step only                   | Production database role with schema-change permissions.                           |
-| `BETTER_AUTH_SECRET`                     | Cloudflare Pages secret                               | Pages runtime                         | Authentication signing/encryption secret.                                          |
-| `RESEND_API_KEY`                         | Cloudflare Pages secret                               | Pages runtime                         | Transactional email API credential.                                                |
-| `SENTRY_DSN`                             | Cloudflare Pages variable or secret                   | Pages runtime                         | Application error reporting destination.                                           |
-| `APP_ENV`                                | Cloudflare Pages variable                             | Pages runtime                         | Runtime environment label; production value is configured outside the repository.  |
-| `APP_RELEASE`                            | GitHub Actions variable and Cloudflare Pages variable | deployment workflow and Pages runtime | Release identifier derived from the GitHub commit SHA.                             |
-| `PRODUCTION_URL`                         | GitHub Actions variable                               | smoke-test step                       | Canonical production origin.                                                       |
-| `PRODUCTION_SMOKE_HEALTH_URL`            | GitHub Actions variable                               | smoke-test step                       | Public or synthetic health-check URL.                                              |
-| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL`  | GitHub Actions variable                               | smoke-test step                       | Public Discovery smoke-test URL that uses no private data.                         |
+| Name                                    | Kind                                                  | Available to                          | Purpose                                                                            |
+| --------------------------------------- | ----------------------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
+| `CLOUDFLARE_ACCOUNT_ID`                 | GitHub Actions variable                               | production deployment workflow        | Selects the Cloudflare account for Wrangler direct upload.                         |
+| `CLOUDFLARE_PAGES_PROJECT_NAME`         | GitHub Actions variable                               | production deployment workflow        | Selects the production Pages project.                                              |
+| `CLOUDFLARE_API_TOKEN`                  | GitHub Actions secret                                 | production deployment workflow        | Least-privilege token for Wrangler direct upload.                                  |
+| `MIGRATION_DATABASE_URL`                | GitHub Actions secret                                 | migration step only                   | Direct Neon connection for checked-in Drizzle migrations.                          |
+| `PRODUCTION_HYPERDRIVE`                 | Cloudflare Pages binding                              | Pages runtime                         | Production Hyperdrive connection used by application traffic.                      |
+| `NEON_PRODUCTION_APP_ROLE`              | inventory role name                                   | Pages runtime through Hyperdrive      | Least-privilege production database role for application queries and transactions. |
+| `NEON_PRODUCTION_MIGRATION_ROLE`        | inventory role name                                   | migration step only                   | Production database role with schema-change permissions.                           |
+| `BETTER_AUTH_SECRET`                    | Cloudflare Pages secret                               | Pages runtime                         | Authentication signing/encryption secret.                                          |
+| `RESEND_API_KEY`                        | Cloudflare Pages secret                               | Pages runtime                         | Transactional email API credential.                                                |
+| `SENTRY_DSN`                            | Cloudflare Pages variable or secret                   | Pages runtime                         | Application error reporting destination.                                           |
+| `APP_ENV`                               | Cloudflare Pages variable                             | Pages runtime                         | Runtime environment label; production value is configured outside the repository.  |
+| `APP_RELEASE`                           | GitHub Actions variable and Cloudflare Pages variable | deployment workflow and Pages runtime | Release identifier derived from the GitHub commit SHA.                             |
+| `PRODUCTION_URL`                        | GitHub Actions variable                               | smoke-test step                       | Canonical production origin.                                                       |
+| `PRODUCTION_SMOKE_HEALTH_URL`           | GitHub Actions variable                               | smoke-test step                       | Public or synthetic health-check URL.                                              |
+| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | GitHub Actions variable                               | smoke-test step                       | Public Discovery smoke-test URL that uses no private data.                         |
 
 Rollback uses Cloudflare Pages deployment history to restore a prior
 successful production deployment. Database rollback must not be

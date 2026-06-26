@@ -75,17 +75,36 @@ The workflow does not use `pull_request_target`, GitHub environments, deployment
 
 Dependabot security updates and repository ruleset setup remain human-owned repository configuration tracked by GitHub issue #18.
 
-## Production deployment planning
+## Production deployment
 
 Production is the only required deployed environment. Preview deployments are future optional infrastructure.
 
-The planned production path is: CI succeeds on `main`, checked-in Drizzle migrations run against Neon with a direct migration credential, failed migrations block build and upload, `pnpm build` produces `dist/`, Wrangler direct upload publishes `dist/`, and smoke tests run against production. The upload command is shaped like:
+The `Production Deploy` GitHub Actions workflow runs only after the `CI` workflow succeeds for a `push` on this repository's `main` branch. Pull request CI cannot trigger the privileged deployment workflow and does not receive GitHub production environment secrets.
+
+The production path is: checked-in Drizzle migrations run against Neon with a direct migration credential, failed migrations block build and upload, `pnpm build` produces `dist/`, Wrangler direct upload publishes `dist/`, and public smoke checks verify production. The workflow declares the GitHub `production` environment and serializes production deployments so only one migration/upload can run at a time.
+
+Required GitHub production environment configuration:
+
+| Name                                    | Kind             | Purpose                                                    |
+| --------------------------------------- | ---------------- | ---------------------------------------------------------- |
+| `CLOUDFLARE_ACCOUNT_ID`                 | Actions variable | Selects the Cloudflare account for Wrangler direct upload. |
+| `CLOUDFLARE_PAGES_PROJECT_NAME`         | Actions variable | Selects the production Pages project.                      |
+| `CLOUDFLARE_API_TOKEN`                  | Actions secret   | Least-privilege token for Wrangler direct upload.          |
+| `MIGRATION_DATABASE_URL`                | Actions secret   | Direct Neon connection used only by `pnpm db:migrate`.     |
+| `PRODUCTION_SMOKE_HEALTH_URL`           | Actions variable | Public or synthetic health-check URL.                      |
+| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | Actions variable | Public Discovery smoke-test URL with no private data.      |
+
+The workflow records `APP_RELEASE` from the deployed commit SHA and passes that SHA to Wrangler as the Pages deployment commit hash. The upload command is shaped like:
 
 ```sh
-pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"
+pnpm exec wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$APP_RELEASE"
 ```
 
 Runtime traffic uses production Hyperdrive with a least-privilege application database role. The direct Neon migration credential must not be available to Pages runtime code. R2, Images, Queues, and Cron remain deferred until their product slices need them.
+
+To pause or disable production deployment, disable the `Production Deploy` workflow in GitHub Actions or update the protected `production` environment so required reviewers do not approve deployment jobs. Do not remove pull request CI requirements to pause production deployment.
+
+Rollback uses Cloudflare Pages deployment history to restore a prior successful production deployment. Database rollback must not be assumed; migrations must remain forward-compatible, and database recovery requires a separate explicit restore plan.
 
 ## Before contributing
 

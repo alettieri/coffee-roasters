@@ -27,23 +27,23 @@ explicit authorization and credentials.
 
 Record these names without values:
 
-| Name                                     | Kind                                                  | Available to                          | Purpose                                                                            |
-| ---------------------------------------- | ----------------------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
-| `CLOUDFLARE_ACCOUNT_ID`                  | GitHub Actions variable                               | production deployment workflow        | Selects the Cloudflare account for Wrangler direct upload.                         |
-| `CLOUDFLARE_PAGES_PROJECT_NAME`          | GitHub Actions variable                               | production deployment workflow        | Selects the production Pages project.                                              |
-| `CLOUDFLARE_API_TOKEN`                   | GitHub Actions secret                                 | production deployment workflow        | Least-privilege token for Wrangler direct upload.                                  |
-| `NEON_PRODUCTION_MIGRATION_DATABASE_URL` | GitHub Actions secret                                 | migration step only                   | Direct Neon connection for checked-in Drizzle migrations.                          |
-| `PRODUCTION_HYPERDRIVE`                  | Cloudflare Pages binding                              | Pages runtime                         | Production Hyperdrive connection used by application traffic.                      |
-| `NEON_PRODUCTION_APP_ROLE`               | inventory role name                                   | Pages runtime through Hyperdrive      | Least-privilege production database role for application queries and transactions. |
-| `NEON_PRODUCTION_MIGRATION_ROLE`         | inventory role name                                   | migration step only                   | Production database role with schema-change permissions.                           |
-| `BETTER_AUTH_SECRET`                     | Cloudflare Pages secret                               | Pages runtime                         | Authentication signing/encryption secret.                                          |
-| `RESEND_API_KEY`                         | Cloudflare Pages secret                               | Pages runtime                         | Transactional email API credential.                                                |
-| `SENTRY_DSN`                             | Cloudflare Pages variable or secret                   | Pages runtime                         | Application error reporting destination.                                           |
-| `APP_ENV`                                | Cloudflare Pages variable                             | Pages runtime                         | Runtime environment label.                                                         |
-| `APP_RELEASE`                            | GitHub Actions variable and Cloudflare Pages variable | deployment workflow and Pages runtime | Release identifier derived from the GitHub commit SHA.                             |
-| `PRODUCTION_URL`                         | GitHub Actions variable                               | smoke-test step                       | Canonical production origin.                                                       |
-| `PRODUCTION_SMOKE_HEALTH_URL`            | GitHub Actions variable                               | smoke-test step                       | Public or synthetic health-check URL.                                              |
-| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL`  | GitHub Actions variable                               | smoke-test step                       | Public Discovery smoke-test URL that uses no private data.                         |
+| Name                                    | Kind                                                  | Available to                          | Purpose                                                                            |
+| --------------------------------------- | ----------------------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------- |
+| `CLOUDFLARE_ACCOUNT_ID`                 | GitHub Actions variable                               | production deployment workflow        | Selects the Cloudflare account for Wrangler direct upload.                         |
+| `CLOUDFLARE_PAGES_PROJECT_NAME`         | GitHub Actions variable                               | production deployment workflow        | Selects the production Pages project.                                              |
+| `CLOUDFLARE_API_TOKEN`                  | GitHub Actions secret                                 | production deployment workflow        | Least-privilege token for Wrangler direct upload.                                  |
+| `MIGRATION_DATABASE_URL`                | GitHub Actions secret                                 | migration step only                   | Direct Neon connection for checked-in Drizzle migrations.                          |
+| `PRODUCTION_HYPERDRIVE`                 | Cloudflare Pages binding                              | Pages runtime                         | Production Hyperdrive connection used by application traffic.                      |
+| `NEON_PRODUCTION_APP_ROLE`              | inventory role name                                   | Pages runtime through Hyperdrive      | Least-privilege production database role for application queries and transactions. |
+| `NEON_PRODUCTION_MIGRATION_ROLE`        | inventory role name                                   | migration step only                   | Production database role with schema-change permissions.                           |
+| `BETTER_AUTH_SECRET`                    | Cloudflare Pages secret                               | Pages runtime                         | Authentication signing/encryption secret.                                          |
+| `RESEND_API_KEY`                        | Cloudflare Pages secret                               | Pages runtime                         | Transactional email API credential.                                                |
+| `SENTRY_DSN`                            | Cloudflare Pages variable or secret                   | Pages runtime                         | Application error reporting destination.                                           |
+| `APP_ENV`                               | Cloudflare Pages variable                             | Pages runtime                         | Runtime environment label.                                                         |
+| `APP_RELEASE`                           | GitHub Actions variable and Cloudflare Pages variable | deployment workflow and Pages runtime | Release identifier derived from the GitHub commit SHA.                             |
+| `PRODUCTION_URL`                        | GitHub Actions variable                               | smoke-test step                       | Canonical production origin.                                                       |
+| `PRODUCTION_SMOKE_HEALTH_URL`           | GitHub Actions variable                               | smoke-test step                       | Public or synthetic health-check URL.                                              |
+| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | GitHub Actions variable                               | smoke-test step                       | Public Discovery smoke-test URL that uses no private data.                         |
 
 ## Cloudflare
 
@@ -52,9 +52,9 @@ Record these names without values:
       Pages Git integration for required deployment.
 - [ ] Record the production Pages project name and production branch.
 - [ ] Record the build command `pnpm build` and output directory `dist/`.
-- [ ] Record the planned direct-upload command shape: `pnpm wrangler
+- [ ] Record the direct-upload command shape: `pnpm exec wrangler
 pages deploy dist/ --project-name <production-pages-project> --branch
-main --commit-hash "$GITHUB_SHA"`.
+main --commit-hash "$APP_RELEASE"`.
 - [ ] Configure production Pages variables, secrets, and bindings.
 - [ ] Record the production Hyperdrive binding name.
 - [ ] Record runtime application variable and secret names from the
@@ -104,6 +104,8 @@ main --commit-hash "$GITHUB_SHA"`.
 - [ ] Require pull requests and required checks, with an explicit owner bypass policy.
 - [ ] Ensure workflow tokens and third-party actions use least privilege.
 - [ ] Create protected production deployment configuration before adding the deployment workflow.
+- [ ] Configure the `Production Deploy` workflow to use the protected
+      GitHub `production` environment.
 - [ ] Use the production deployment name contract for required
       production variable, secret, binding, and release identifier names.
 - [ ] Plan deployment only after CI succeeds on `main`.
