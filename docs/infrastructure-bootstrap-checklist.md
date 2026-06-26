@@ -56,7 +56,11 @@ Record these names without values:
 pages deploy dist/ --project-name <production-pages-project> --branch
 main --commit-hash "$APP_RELEASE"`.
 - [ ] Configure production Pages variables, secrets, and bindings.
-- [ ] Record the production Hyperdrive binding name.
+- [ ] Create a production Hyperdrive resource for the least-privilege
+      Neon application role and bind it to the Pages production
+      environment as `PRODUCTION_HYPERDRIVE`.
+- [ ] Record the production Hyperdrive binding name without recording
+      the Hyperdrive ID or connection string in the repository.
 - [ ] Record runtime application variable and secret names from the
       production deployment name contract without values.
 - [ ] Defer R2, Images, Queues, and Cron bindings until product slices authorize them.
@@ -69,7 +73,9 @@ main --commit-hash "$APP_RELEASE"`.
 - [ ] Store the Cloudflare API token name in GitHub Actions production
       deployment configuration without checking in its value.
 - [ ] Document token rotation and emergency revocation.
-- [ ] Pin and document the Wrangler compatibility date and compatibility flags.
+- [ ] Use the repository-pinned Wrangler compatibility date and
+      compatibility flags in `wrangler.toml`; Postgres.js runtime
+      access through Hyperdrive requires Node.js compatibility.
 - [ ] Configure budget or usage alerts.
 
 ## Neon
@@ -84,6 +90,10 @@ main --commit-hash "$APP_RELEASE"`.
       deployment workflow configuration, unavailable to runtime code.
 - [ ] Configure production Hyperdrive for runtime traffic using the
       least-privilege application role.
+- [ ] Keep the direct Neon migration credential limited to the
+      `MIGRATION_DATABASE_URL` GitHub Actions secret used by the
+      production migration step; Pages runtime database traffic must use
+      `PRODUCTION_HYPERDRIVE.connectionString`.
 - [ ] Define recovery-point and recovery-time objectives.
 - [ ] Confirm the available point-in-time restore window.
 - [ ] Restore into a separate branch and verify recovery before storing meaningful Journal data.

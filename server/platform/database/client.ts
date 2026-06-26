@@ -1,7 +1,11 @@
 import { drizzle, type PostgresJsDatabase } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
+import type { H3Event } from 'h3';
 
-import { parseServerEnvironment } from '../env';
+import {
+  resolveLocalDatabaseConnectionString,
+  resolveRuntimeDatabaseConnectionString,
+} from '../env';
 import { schema } from './schema';
 
 export type Database = PostgresJsDatabase<typeof schema>;
@@ -16,7 +20,7 @@ interface CreateDatabaseClientOptions {
 }
 
 export function createDatabaseClient(
-  databaseUrl = parseServerEnvironment().DATABASE_URL,
+  databaseUrl = resolveLocalDatabaseConnectionString(),
   options: CreateDatabaseClientOptions = {},
 ): DatabaseClient {
   const sql = postgres(databaseUrl, {
@@ -27,4 +31,14 @@ export function createDatabaseClient(
     db: drizzle(sql, { schema }),
     close: () => sql.end(),
   };
+}
+
+export function createRuntimeDatabaseClient(
+  event: H3Event,
+  options: CreateDatabaseClientOptions = {},
+): DatabaseClient {
+  return createDatabaseClient(
+    resolveRuntimeDatabaseConnectionString(event),
+    options,
+  );
 }
