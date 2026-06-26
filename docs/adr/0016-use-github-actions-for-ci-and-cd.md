@@ -44,7 +44,7 @@ The planned production deployment workflow will:
 - run checked-in Drizzle migrations against Neon through a direct production migration credential before build or upload;
 - fail closed when migrations fail, preventing the build and Pages upload;
 - run `pnpm build`, producing the Cloudflare Pages output in `dist/`;
-- upload with Wrangler direct upload using a command shaped like `pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"`;
+- upload with Wrangler direct upload using a command shaped like `pnpm exec wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$APP_RELEASE"`;
 - set or pass a release identifier derived from the GitHub commit SHA for application observability, smoke tests, and rollback records;
 - run production smoke tests after upload without using private production data; and
 - avoid writing secrets or private application data to logs, caches, test artifacts, or build artifacts.

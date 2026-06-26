@@ -49,7 +49,7 @@ directory is `dist/`.
 The planned production upload command shape is:
 
 ```sh
-pnpm wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$GITHUB_SHA"
+pnpm exec wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$APP_RELEASE"
 ```
 
 The production deployment workflow will run from GitHub Actions after
@@ -71,7 +71,7 @@ Production deployment configuration uses this no-values naming contract:
 | `CLOUDFLARE_ACCOUNT_ID`                  | GitHub Actions variable                               | production deployment workflow        | Selects the Cloudflare account for Wrangler direct upload.                         |
 | `CLOUDFLARE_PAGES_PROJECT_NAME`          | GitHub Actions variable                               | production deployment workflow        | Selects the production Pages project.                                              |
 | `CLOUDFLARE_API_TOKEN`                   | GitHub Actions secret                                 | production deployment workflow        | Least-privilege token for Wrangler direct upload.                                  |
-| `NEON_PRODUCTION_MIGRATION_DATABASE_URL` | GitHub Actions secret                                 | migration step only                   | Direct Neon connection for checked-in Drizzle migrations.                          |
+| `MIGRATION_DATABASE_URL`                 | GitHub Actions secret                                 | migration step only                   | Direct Neon connection for checked-in Drizzle migrations.                          |
 | `PRODUCTION_HYPERDRIVE`                  | Cloudflare Pages binding                              | Pages runtime                         | Production Hyperdrive connection used by application traffic.                      |
 | `NEON_PRODUCTION_APP_ROLE`               | inventory role name                                   | Pages runtime through Hyperdrive      | Least-privilege production database role for application queries and transactions. |
 | `NEON_PRODUCTION_MIGRATION_ROLE`         | inventory role name                                   | migration step only                   | Production database role with schema-change permissions.                           |
