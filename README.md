@@ -85,14 +85,14 @@ The production path is: checked-in Drizzle migrations run against Neon with a di
 
 Required GitHub production environment configuration:
 
-| Name                                      | Kind             | Purpose                                                   |
-| ----------------------------------------- | ---------------- | --------------------------------------------------------- |
+| Name                                      | Kind             | Purpose                                                    |
+| ----------------------------------------- | ---------------- | ---------------------------------------------------------- |
 | `CLOUDFLARE_ACCOUNT_ID`                   | Actions variable | Selects the Cloudflare account for Wrangler direct upload. |
-| `CLOUDFLARE_PAGES_PROJECT_NAME`           | Actions variable | Selects the production Pages project.                     |
-| `CLOUDFLARE_API_TOKEN`                    | Actions secret   | Least-privilege token for Wrangler direct upload.         |
-| `MIGRATION_DATABASE_URL`                  | Actions secret   | Direct Neon connection used only by `pnpm db:migrate`.    |
-| `PRODUCTION_SMOKE_HEALTH_URL`             | Actions variable | Public or synthetic health-check URL.                     |
-| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL`   | Actions variable | Public Discovery smoke-test URL with no private data.     |
+| `CLOUDFLARE_PAGES_PROJECT_NAME`           | Actions variable | Selects the production Pages project.                      |
+| `CLOUDFLARE_API_TOKEN`                    | Actions secret   | Least-privilege token for Wrangler direct upload.          |
+| `MIGRATION_DATABASE_URL`                  | Actions secret   | Direct Neon connection used only by `pnpm db:migrate`.     |
+| `PRODUCTION_SMOKE_HEALTH_URL`             | Actions variable | Public or synthetic health-check URL.                      |
+| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL`   | Actions variable | Public Discovery smoke-test URL with no private data.      |
 
 The workflow records `APP_RELEASE` from the deployed commit SHA and passes that SHA to Wrangler as the Pages deployment commit hash. The upload command is shaped like:
 
