@@ -1,6 +1,7 @@
 # Keep this compatibility date aligned with nuxt.config.ts. The Node.js
 # compatibility flags are required for Postgres.js runtime access through
 # Cloudflare Hyperdrive.
+name = "coffee-roasters"
 compatibility_date = "2026-06-23"
 compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]
 pages_build_output_dir = "dist"
