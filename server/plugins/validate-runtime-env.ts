@@ -1,5 +1,4 @@
-import { parseServerEnvironment } from '../platform/env';
-
 export default defineNitroPlugin(() => {
-  parseServerEnvironment();
+  // Cloudflare Pages bindings are request-scoped in Nitro, so database
+  // connection validation happens when runtime code opens a database client.
 });
