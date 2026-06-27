@@ -8,7 +8,10 @@ Accepted
 
 ## Context
 
-The product domain is relational. Coffee Roasters have Roaster Locations and Area associations; Journals contain Visits; Visits require a matching Coffee Roaster and Roaster Location; Suggestions remain separate from published Curated Roaster Data until review; and maintainer authorization and publication history must be represented reliably.
+The product domain is relational. Coffee Roasters have public catalog state;
+Coffee Lovers have private tracking state for Coffee Roasters; Visits belong to
+one Coffee Lover and one Coffee Roaster; and admin authorization and publication
+state must be represented reliably.
 
 The application needs transactional writes, explicit constraints, migrations that can be reviewed, and type-safe database access from TypeScript. Agentic implementation also benefits from a consistent schema and migration workflow with little hidden behavior.
 
@@ -26,7 +29,9 @@ The implementation will:
 - centralize reusable data access rather than scattering ad hoc queries through UI components; and
 - avoid production schema changes through direct push or synchronization commands.
 
-Domain invariants that span relationships, including ensuring a Visit's Roaster Location belongs to its Coffee Roaster, must be enforced transactionally and at the strongest practical database boundary.
+Domain invariants that span relationships, including ensuring a user can mutate
+only their own Roaster Tracking State and Visits, must be enforced
+transactionally and at the strongest practical database boundary.
 
 ## Consequences
 

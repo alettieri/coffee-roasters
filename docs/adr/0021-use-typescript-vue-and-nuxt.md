@@ -10,7 +10,10 @@ Accepted
 
 ADR 0003 originally selected Next.js App Router. Before implementation began, learning Vue and Nuxt became an explicit goal of this personal project.
 
-V1 still requires indexable Area and Roaster Profile pages, authenticated Journal workflows, Visit Photo management, Suggestions, and a protected admin section. Nuxt supports server rendering, file-based routing, and server-side operations through Nitro.
+V1 still requires public Roaster Catalog and Roaster Profile pages,
+authenticated `My Roasters` and Visit workflows, and a protected admin section.
+Nuxt supports server rendering, file-based routing, and server-side operations
+through Nitro.
 
 ## Decision
 
@@ -19,7 +22,7 @@ Use strict TypeScript, Vue, and Nuxt for the v1 application.
 The implementation will:
 
 - use Vue Single-File Components and the Composition API;
-- use server rendering for indexable Public Discovery pages;
+- use server rendering for public Roaster Catalog and Roaster Profile pages;
 - keep secrets, privileged data access, and authorization in server-side code;
 - use client-side interactivity only where the workflow requires it;
 - use Nuxt pages and middleware as presentation and navigation adapters;

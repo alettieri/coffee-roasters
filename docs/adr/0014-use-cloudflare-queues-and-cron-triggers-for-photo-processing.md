@@ -4,7 +4,7 @@ Date: June 19, 2026
 
 ## Status
 
-Accepted
+Superseded by ADR 0037 for v1 scope
 
 ## Context
 

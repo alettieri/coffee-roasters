@@ -25,7 +25,8 @@ Nitro server routes will:
 - avoid business rules, authorization policy, and ad hoc database access; and
 - use HTTP semantics appropriate to the operation.
 
-Vue composables and form components may wrap these routes for user-interface concerns. Better Auth endpoints, Visit Photo upload coordination, callbacks, and webhooks also use Nitro server routes.
+Vue composables and form components may wrap these routes for user-interface
+concerns. Better Auth endpoints also use Nitro server routes.
 
 The routes are internal first-party transports, not a committed public API. A versioned API requires a concrete external client and a separate decision.
 

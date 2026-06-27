@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-V1 is a single full-stack Nuxt application, but it contains several distinct capabilities: Public Discovery, private Journals and Visits, Visit Photo processing, Suggestions, Curated Roaster Data administration, and identity and authorization.
+V1 is a single full-stack Nuxt application, but it contains several distinct capabilities: a public Roaster Catalog, private personal tracking and Visits, admin curation, and identity and authorization.
 
 Organizing application behavior directly around Vue pages, Nitro server routes, or database tables would couple domain rules to framework entry points and make ownership, authorization, and testing harder to reason about.
 
@@ -20,12 +20,10 @@ Organize the application as a modular monolith around domain capabilities.
 
 The initial modules are:
 
-- **Discovery**: Areas, Area Roaster Lists, Roaster Previews, Roaster Profiles, Public Signals, and Roast Quality Signals.
-- **Journal**: Journals, Visits, Visit Date, notes, personal impressions, and Visit ownership.
-- **Visit Photos**: upload authorization, processing states, captions, Visit Cover Photos, storage, sanitization, and deletion.
-- **Suggestions**: missing Coffee Roaster and correction submissions plus review state.
-- **Curation**: Curated Roaster Data, internal source and verification notes, publication, and protected admin workflows.
-- **Identity and Access**: Better Auth integration, Local Coffee Lover identity, session handling, ownership policies, and maintainer authorization.
+- **Catalog**: public Coffee Roasters, Roaster Profiles, visibility state, and public outbound links.
+- **Tracking**: `My Roasters`, private Roaster Tracking State, repeat Visits, Visit Date, private notes, private Visit Ratings, and Visit ownership.
+- **Curation**: Admin-only Roaster creation, editing, publication, and hiding.
+- **Identity and Access**: Better Auth integration, Coffee Lover identity, session handling, ownership policies, and admin authorization.
 
 Each module will:
 
@@ -53,6 +51,6 @@ All modules remain in one deployable application and may share one PostgreSQL da
 - Domain behavior remains understandable independently of Nuxt and Vue.
 - Public, private, asynchronous, and administrative entry points can reuse the same operations.
 - Module dependency direction must be reviewed and enforced through directory conventions, lint rules, or architecture tests.
-- Some workflows, such as publishing an accepted Suggestion or processing a Visit Photo, cross module boundaries and require explicit orchestration.
+- Some workflows, such as publishing a Roaster or adding a Visit for an untracked Roaster, cross module boundaries and require explicit orchestration.
 - Sharing one database simplifies transactions but permits accidental coupling unless private data-access code remains encapsulated.
 - A module may be extracted later if measured operational or ownership needs justify a service boundary.

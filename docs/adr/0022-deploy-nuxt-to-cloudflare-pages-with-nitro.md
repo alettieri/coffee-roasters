@@ -82,7 +82,7 @@ Production deployment configuration uses this no-values naming contract:
 | `APP_RELEASE`                           | GitHub Actions variable and Cloudflare Pages variable | deployment workflow and Pages runtime | Release identifier derived from the GitHub commit SHA.                             |
 | `PRODUCTION_URL`                        | GitHub Actions variable                               | smoke-test step                       | Canonical production origin.                                                       |
 | `PRODUCTION_SMOKE_HEALTH_URL`           | GitHub Actions variable                               | smoke-test step                       | Public or synthetic health-check URL.                                              |
-| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | GitHub Actions variable                               | smoke-test step                       | Public Discovery smoke-test URL that uses no private data.                         |
+| `PRODUCTION_SMOKE_PUBLIC_CATALOG_URL`   | GitHub Actions variable                               | smoke-test step                       | Public Roaster Catalog smoke-test URL that uses no private data.                   |
 
 Rollback uses Cloudflare Pages deployment history to restore a prior
 successful production deployment. Database rollback must not be

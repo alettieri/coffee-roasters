@@ -4,7 +4,7 @@ Date: June 20, 2026
 
 ## Status
 
-Accepted
+Superseded by ADR 0037
 
 ## Context
 
