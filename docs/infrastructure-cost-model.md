@@ -11,11 +11,6 @@ This estimate covers the selected deployed infrastructure:
 - Sentry application observability
 - GitHub Actions CI/CD
 
-R2, Images, Queues, and Cron Triggers are deferred until their product
-slices authorize them. Their pricing remains useful for future
-planning, but they are not part of the required production-only
-deployment baseline.
-
 It excludes domain registration, taxes, paid support, developer AI
 tools, and local electricity or hardware. Prices are current as of the
 date above and should be checked before launch or plan changes.
@@ -35,35 +30,6 @@ the same per-invocation CPU constraint still applies to server-rendered
 Nuxt requests. The $5 paid plan is the recommended production baseline
 once reliability matters.
 
-### Cloudflare R2
-
-- First 10 GB-month, 1 million Class A operations, and 10 million Class B operations are free each month.
-- Standard storage beyond the allowance: $0.015 per GB-month.
-- Class A operations: $4.50 per million.
-- Class B operations: $0.36 per million.
-- Internet egress is free.
-
-At this product's expected scale, storage volume will matter before operation charges.
-
-### Cloudflare Images
-
-- First 5,000 unique transformations per month are free.
-- Paid transformations beyond the allowance: $0.50 per 1,000.
-- Calls through the Images binding count as transformations.
-
-Because canonical sanitization performs one transformation per uploaded
-Visit Photo, transformation volume should approximately follow
-photo-upload volume, plus retries.
-
-### Cloudflare Queues
-
-- Free: 10,000 operations per day.
-- Paid Workers plan: 1 million operations per month included, then $0.40 per million.
-- A normally delivered message generally consumes three operations: write, read, and delete.
-
-Photo processing is unlikely to create a meaningful Queue bill before
-the application reaches substantial usage.
-
 ### Neon PostgreSQL
 
 - Free: 100 CU-hours and 0.5 GB storage per project each month.
@@ -81,7 +47,8 @@ availability, storage, or usage headroom matters.
 - Free: 3,000 emails per month, limited to 100 per day and one domain.
 - Pro: $20 per month for 50,000 emails.
 
-Closed single-user authentication will remain far below the free allowance.
+Magic-link authentication for a personal tracker will remain far below the free
+allowance.
 
 ### Sentry
 
@@ -186,16 +153,12 @@ transactional email are the main expected variables.
    Scale-to-zero and free quotas are acceptable for personal use but
    may create cold starts or exhaustion as public traffic grows.
 
-4. **Deferred photo infrastructure**
-   R2, Images, Queues, and Cron costs return when Visit Photo product
-   slices provision those resources.
-
-5. **Provider concentration**
+4. **Provider concentration**
    Cloudflare Pages failure affects the required application deployment.
    This is accepted because consolidated operation is valuable for a
    one-person project.
 
-6. **Preview-environment sprawl**
+5. **Preview-environment sprawl**
    Preview resources are not required initially. If added later, stale
    Neon branches and Cloudflare resources need expiration and cleanup.
 
@@ -210,8 +173,6 @@ For the initial single-user deployment:
 - remain on Neon Free until storage, availability, or measured compute
   usage justifies Launch;
 - use the free Resend and Sentry allowances;
-- defer R2, Images, Queues, and Cron until product slices authorize
-  them;
 - configure budget alerts in Cloudflare, Neon, Resend, Sentry, and
   GitHub;
 - review actual usage after the first full month before changing any
@@ -225,9 +186,6 @@ intermittent.
 ## Official Pricing Sources
 
 - [Cloudflare Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/)
-- [Cloudflare R2 pricing](https://developers.cloudflare.com/r2/pricing/)
-- [Cloudflare Images pricing](https://developers.cloudflare.com/images/pricing/)
-- [Cloudflare Queues pricing](https://developers.cloudflare.com/queues/platform/pricing/)
 - [Neon pricing](https://neon.com/pricing)
 - [Resend pricing](https://resend.com/pricing)
 - [Sentry pricing](https://sentry.io/pricing/)

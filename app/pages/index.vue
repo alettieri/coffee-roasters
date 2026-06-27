@@ -2,10 +2,10 @@
   <main class="page-shell">
     <section class="placeholder">
       <p class="eyebrow">Coffee Roaster Discovery</p>
-      <h1>Public Discovery is being prepared.</h1>
+      <h1>Personal roaster tracking is being prepared.</h1>
       <p>
         This local placeholder confirms the Nuxt application is running before
-        product-specific discovery behavior is implemented.
+        product-specific catalog and tracking behavior is implemented.
       </p>
     </section>
   </main>

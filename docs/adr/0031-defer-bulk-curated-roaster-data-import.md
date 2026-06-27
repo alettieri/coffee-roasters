@@ -8,19 +8,21 @@ Accepted
 
 ## Context
 
-The product will initially have one Local Coffee Lover and an early, limited set of Curated Roaster Data. ADR 0001 already provides a private admin interface for creating and maintaining that data.
+The product will initially have one Coffee Lover and an early, limited set of
+Roaster Catalog data. Admin curation is handled through the current v1 product
+scope in ADR 0037.
 
 Choosing a seed-file format, import contract, deduplication policy, provenance mapping, and reconciliation workflow now would optimize for a data volume and acquisition process that have not yet been established.
 
 ## Decision
 
-Do not build a bulk seed or Curated Roaster Data import pipeline yet.
+Do not build a bulk seed or Roaster Catalog import pipeline yet.
 
 For the initial phase:
 
-- create and update Curated Roaster Data through the private admin interface;
+- create and update Roaster Catalog data through the private admin interface;
 - keep PostgreSQL as the source of truth;
-- retain internal source and verification notes through the Curation module;
+- keep admin-entered Roaster data in the Curation module;
 - avoid repository seed files that could become an ambiguous second source of truth; and
 - use only minimal deterministic fixtures required for automated tests.
 

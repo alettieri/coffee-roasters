@@ -8,58 +8,75 @@ Accepted
 
 ## Context
 
-The application stores private Journal data, private Visit Photos in R2, public Curated Roaster Data, Suggestions, authentication records, and administrative publication history. These categories have different deletion and audit requirements.
+The application stores private Roaster Tracking State, private Visits, public
+Roaster Catalog data, authentication records, and administrative publication
+history. These categories have different deletion and audit requirements.
 
-PostgreSQL and R2 cannot participate in one atomic transaction. Deletion workflows must therefore remain correct when database and object-storage operations partially fail.
+Private tracking data must be deletable without rewriting public catalog
+history. Public catalog data needs archival so the Admin can preserve curation
+history and avoid breaking references accidentally.
 
 ## Decision
 
 Apply deletion and retention rules by data category.
 
-### Private Journal data
+### Private Tracking Data
 
-- A deleted Visit becomes inaccessible to the Local Coffee Lover immediately.
-- Deleting a Visit schedules permanent deletion of its Visit Photos and associated private Journal records.
-- A deleted Visit Photo becomes inaccessible immediately and its canonical and quarantine objects are scheduled for R2 deletion.
-- Object deletion is idempotent and retryable.
-- Cleanup jobs reconcile pending deletions and unreferenced objects.
-- Private content must not remain in application logs, analytics, or observability systems.
+- A Coffee Lover can delete a Visit.
+- Deleting a Visit permanently deletes the private Visit record.
+- Deleting a Visit does not delete the associated Coffee Roaster.
+- Private content must not remain in application logs, analytics, or
+  observability systems.
+- Product analytics, if added later, must not retain private notes, Visit text,
+  Visit Ratings, or derived personal preference profiles after account
+  deletion.
 
-### Account deletion
+### Account Deletion
 
-- Account deletion is an explicit destructive workflow requiring recent authentication and confirmation.
+- Account deletion is an explicit destructive workflow requiring recent
+  authentication and confirmation.
 - Sessions are revoked immediately.
-- The Journal, Visits, Visit Photos, Photo Captions, and other private account-owned content are permanently deleted.
-- R2 deletion continues asynchronously when necessary, with tracked retry state.
-- Minimal security or operational records may be retained only when required and must not contain private Journal content.
+- `My Roasters`, Visits, private notes, Visit Ratings, and other private
+  account-owned content are permanently deleted.
+- Minimal security or operational records may be retained only when required
+  and must not contain private tracking content.
 
-### Curated Roaster Data
+### Roaster Catalog Data
 
-- Published Coffee Roasters, Areas, Roaster Locations, Public Signals, and Roast Quality Signals are archived rather than physically deleted.
-- Archived records are excluded from Public Discovery but remain available to authorized maintainers.
+- Published Coffee Roasters are archived rather than physically deleted.
+- Archived records are excluded from the public Roaster Catalog but remain
+  available to authorized Admins.
 - Existing internal references and publication history remain intact.
-- Merging duplicate records is an explicit administrative operation rather than deletion.
+- Merging duplicate records is an explicit administrative operation rather than
+  deletion.
 
-### Suggestions and administrative history
+### Administrative History
 
-- Suggestions and their review outcomes are retained for audit.
-- Maintainer publication actions retain actor, action, affected record, and timestamp.
-- Internal source and verification notes remain private.
-- Retention policy may be revisited if legal or operational requirements emerge.
+- Admin publication actions retain actor, action, affected record, and
+  timestamp.
+- Internal source and verification notes, if added later, remain private.
+- Retention policy may be revisited if legal or operational requirements
+  emerge.
 
-### Authentication data
+### Authentication Data
 
 - Disabling or deleting an account revokes active sessions immediately.
-- Expired sessions and verification or recovery tokens are removed through scheduled cleanup.
-- Authentication retention must remain compatible with Better Auth's integrity requirements.
+- Expired sessions and verification tokens are removed through scheduled
+  cleanup.
+- Authentication retention must remain compatible with Better Auth's integrity
+  requirements.
 
-Hard deletion must not be used to conceal or rewrite curation history. Archival must not be used to prevent a Local Coffee Lover from permanently deleting private Journal data.
+Hard deletion must not be used to conceal or rewrite curation history. Archival
+must not be used to prevent a Coffee Lover from permanently deleting private
+tracking data.
 
 ## Consequences
 
-- Private data can be permanently removed while public curation remains auditable.
-- User-visible deletion may complete before physical R2 cleanup.
-- Database records need explicit archived, deletion-pending, or processing states where appropriate.
-- Cleanup and reconciliation jobs become critical privacy infrastructure.
-- Administrative interfaces must distinguish archive, merge, disable, and permanent delete actions.
-- Backup retention may temporarily preserve deleted database data outside the live application; provider retention and restoration access require operational controls and documentation.
+- Private data can be permanently removed while public curation remains
+  auditable.
+- Database records need explicit archived states where appropriate.
+- Administrative interfaces must distinguish archive, merge, disable, and
+  permanent delete actions.
+- Backup retention may temporarily preserve deleted database data outside the
+  live application; provider retention and restoration access require
+  operational controls and documentation.

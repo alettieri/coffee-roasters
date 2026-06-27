@@ -28,7 +28,7 @@ The implementation will:
 - write and compare system timestamps as UTC instants;
 - localize system timestamps only at presentation boundaries;
 - avoid converting a Visit Date through JavaScript `Date` or a timezone;
-- use separate unique slugs for public Area and Roaster Profile URLs; and
+- use separate unique slugs for public Roaster Profile URLs; and
 - treat slug changes as explicit application operations with collision handling.
 
 Database-managed authentication tables may retain identifier conventions required by Better Auth unless compatibility and migration testing support using the application convention.
@@ -38,7 +38,7 @@ Database-managed authentication tables may retain identifier conventions require
 - Identifiers can be generated consistently across synchronous and asynchronous workflows.
 - UUIDv7 provides approximate creation ordering and generally better index locality than fully random UUIDv4 values.
 - Identifiers remain opaque and do not reveal table cardinality.
-- A Visit Date remains stable regardless of the Local Coffee Lover's or server's timezone.
+- A Visit Date remains stable regardless of the Coffee Lover's or server's timezone.
 - Application code must use a UUIDv7 implementation compatible with both Node.js development and Cloudflare Workers.
 - Human-readable URLs require separate slug indexes and lifecycle rules.
 - Creation order must use explicit timestamps when correctness matters; UUID ordering is not a substitute for a domain timestamp.

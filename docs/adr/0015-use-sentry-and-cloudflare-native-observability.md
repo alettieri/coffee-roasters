@@ -8,13 +8,20 @@ Accepted
 
 ## Context
 
-The application spans Nuxt, Neon PostgreSQL, Better Auth, Resend, and planned Cloudflare services such as R2, Images, Queues, and Cron Triggers. Required production observability initially covers Pages deployment and runtime health, Sentry application errors, release identifiers, smoke tests, and database/runtime connectivity.
+The application spans Nuxt, Neon PostgreSQL, Better Auth, Resend, and
+Cloudflare Pages. Required production observability initially covers Pages
+deployment and runtime health, Sentry application errors, release identifiers,
+smoke tests, and database/runtime connectivity.
 
-The product contains private Journal text, Visit Photos, authentication data, presigned object URLs, and internal curation notes. Observability must help diagnose failures without becoming another store for sensitive content.
+The product contains private tracking notes, Visit text, Visit Ratings,
+authentication data, and admin-entered catalog data. Observability must help
+diagnose failures without becoming another store for sensitive content.
 
 ## Decision
 
-Use Sentry for application error reporting and performance tracing. Use Cloudflare's native logs, metrics, and platform observability for Pages deployment/runtime health. Add R2, Images, Queues, and Cron telemetry when those product slices provision the resources.
+Use Sentry for application error reporting and performance tracing. Use
+Cloudflare's native logs, metrics, and platform observability for Pages
+deployment/runtime health.
 
 The implementation will:
 
@@ -27,16 +34,13 @@ The implementation will:
 - sample performance traces to control cost and data volume; and
 - define required production alerts for failed smoke tests, elevated server errors, sustained authentication failures, database/runtime health failures, and Pages deployment or runtime failures.
 
-R2, Images, Queues, Cron, Visit Photo processing, queue backlog, dead-letter handling, and scheduled cleanup observability are deferred until those product slices require their Cloudflare bindings.
-
 Telemetry must not include:
 
 - passwords, auth tokens, session cookies, verification or recovery tokens;
-- presigned R2 URLs or storage credentials;
-- Visit notes, personal impressions, Photo Captions, or private image bytes;
-- internal curation source or verification notes;
+- Visit notes, Visit Ratings, or private tracking notes;
+- admin-entered private curation notes, if added;
 - raw request bodies from private or authentication operations; or
-- unnecessary Local Coffee Lover identifiers.
+- unnecessary Coffee Lover identifiers.
 
 Sensitive fields must be removed before telemetry leaves the application. Production logging will favor structured event names, opaque record identifiers where necessary, and bounded metadata over arbitrary object serialization.
 

@@ -8,7 +8,10 @@ Accepted
 
 ## Context
 
-V1 requires indexable Public Discovery pages, authenticated private Journals, Visit Photo management, Suggestions, and a protected admin interface. There is no concrete second client, such as a native mobile application, that requires an independently deployed API.
+V1 requires public Roaster Catalog pages, authenticated private `My Roasters`
+and Visit workflows, and a protected admin interface. There is no concrete
+second client, such as a native mobile application, that requires an
+independently deployed API.
 
 Splitting the product into separate frontend and API deployments would introduce additional contracts, authentication boundaries, deployment coordination, and operational overhead before those costs provide product value.
 
@@ -18,10 +21,10 @@ Build v1 as a single full-stack web application.
 
 The application will:
 
-- render indexable Area and Roaster Profile pages;
+- render public Roaster Catalog and Roaster Profile pages;
 - own server-side application operations and domain rules;
-- provide authenticated Journal and Visit Photo workflows;
-- include the protected admin section established by ADR 0001; and
+- provide authenticated `My Roasters` and Visit workflows;
+- include protected admin Roaster curation workflows; and
 - access the primary application data store directly through server-side code.
 
 Code should keep domain rules separate from framework-specific request and rendering concerns so that a formal API can be extracted if a concrete second client requires one.

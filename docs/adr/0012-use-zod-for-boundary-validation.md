@@ -8,7 +8,10 @@ Accepted
 
 ## Context
 
-The application accepts untrusted input through public Suggestions, authentication forms, Journal and Visit workflows, Visit Photo metadata, and administrative forms. Client-side checks improve usability but cannot establish trust. TypeScript types do not exist at runtime.
+The application accepts untrusted input through authentication forms, public
+catalog reads, private tracking and Visit workflows, and administrative forms.
+Client-side checks improve usability but cannot establish trust. TypeScript
+types do not exist at runtime.
 
 The project needs one explicit validation approach that works in Vue forms, Nitro server routes, queue consumers, and other application boundaries without confusing input validation with authorization, domain policy, or database integrity.
 
@@ -35,7 +38,7 @@ Zod will not replace:
 - server-side ownership and maintainer authorization;
 - domain operations that evaluate cross-record rules;
 - PostgreSQL foreign keys, unique constraints, check constraints, and transactions; or
-- decoded-content inspection for Visit Photo safety.
+- URL and free-text validation for public Roaster and private Visit fields.
 
 ## Consequences
 

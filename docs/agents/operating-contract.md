@@ -36,16 +36,15 @@ An implementation issue is complete only when:
 
 ## Planned module layout
 
-Use the modular-monolith boundaries from ADR 0019:
+Use the modular-monolith boundaries from ADR 0019 and the product-scope reset
+from ADR 0037:
 
 ```text
 app/                         Nuxt pages, layouts, Vue components, composables
 server/api/                  thin Nitro HTTP adapters
 server/modules/
-  discovery/
-  journal/
-  visit-photos/
-  suggestions/
+  catalog/
+  tracking/
   curation/
   identity-access/
 server/platform/             database and external-provider adapters
@@ -71,7 +70,7 @@ Domain modules must not depend on Vue, Nuxt, Nitro request events, or provider S
 
 ## Generated-file policy
 
-- Do not commit `.nuxt`, `.output`, coverage, Playwright reports, Wrangler local state, local R2 data, or secrets.
+- Do not commit `.nuxt`, `.output`, coverage, Playwright reports, Wrangler local state, or secrets.
 - Generated Cloudflare binding types must be reproducible through a documented command. Commit them only if the project deliberately chooses committed generated types.
 - Lockfiles and Drizzle migration metadata are committed.
 
@@ -92,7 +91,6 @@ The planned production deployment path is GitHub Actions after required CI succe
 - Pull requests: formatting, linting, type checking, unit tests, local database integration tests, and production build.
 - Main or relevant runtime changes: local `workerd` acceptance tests.
 - Release or provider-sensitive changes: bounded human-gated checks against the deployed production path or a separately authorized preview environment.
-- Cloudflare Images metadata-removal tests require canonical-output inspection in a real Cloudflare integration after the Visit Photo product slice provisions Images and R2, because local emulation is not fully equivalent.
 
 Tests use deterministic clocks and identifiers where behavior depends on them, isolated database state, explicit two-account privacy fixtures, and synthetic security fixtures. Do not derive fixtures from production.
 

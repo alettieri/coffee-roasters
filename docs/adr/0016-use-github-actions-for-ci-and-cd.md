@@ -33,7 +33,8 @@ Pull request workflows will:
 - pin third-party actions to full commit SHAs; and
 - upload useful test and build artifacts without exposing secrets or private data.
 
-Pull request CI will not require Neon, R2, Resend, Sentry, or Cloudflare deployment credentials.
+Pull request CI will not require Neon, Resend, Sentry, or Cloudflare deployment
+credentials.
 
 Runtime workflows will run local `workerd` acceptance tests for main-branch or relevant runtime changes. Provider-sensitive checks are human-gated until the production deployment path and required provider resources exist.
 

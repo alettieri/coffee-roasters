@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-ADR 0020 selected Next.js Server Actions for first-party mutations. Nuxt does not use that transport model.
+Nuxt does not use the Next.js Server Actions transport model.
 
 The product remains a single full-stack application without a concrete second client. It should avoid a speculative public REST API while keeping mutations available to Vue forms, queue consumers, tests, and future transports.
 
@@ -25,11 +25,10 @@ Nitro server routes will:
 - avoid business rules, authorization policy, and ad hoc database access; and
 - use HTTP semantics appropriate to the operation.
 
-Vue composables and form components may wrap these routes for user-interface concerns. Better Auth endpoints, Visit Photo upload coordination, callbacks, and webhooks also use Nitro server routes.
+Vue composables and form components may wrap these routes for user-interface
+concerns. Better Auth endpoints also use Nitro server routes.
 
 The routes are internal first-party transports, not a committed public API. A versioned API requires a concrete external client and a separate decision.
-
-This decision supersedes ADR 0020.
 
 ## Consequences
 

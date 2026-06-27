@@ -8,7 +8,9 @@ Accepted
 
 ## Context
 
-V1 includes authentication, Visit creation, Photo Captions, Suggestions, and administrative curation forms. Most are expected to have straightforward fields and submit to thin Nitro routes.
+V1 includes authentication, Admin Roaster, private tracking, and Visit forms.
+Most are expected to have straightforward fields and submit to thin Nitro
+routes.
 
 A global form framework would introduce another abstraction, validation adapter, state model, and component convention before the application demonstrates difficult dynamic-form requirements.
 
