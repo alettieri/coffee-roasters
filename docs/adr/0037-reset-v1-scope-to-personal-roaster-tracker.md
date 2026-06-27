@@ -9,8 +9,8 @@ Accepted
 ## Context
 
 Earlier product documents described a broader California public discovery
-platform with Area Guides, private Journals, Visit Photos, Suggestions, roaster
-claim flows, and a larger curated discovery model.
+platform with guide-style pages, personal media, community submissions,
+roaster-operated workflows, and a larger curated discovery model.
 
 The product direction has changed. The first useful product is a personal tool
 for tracking Coffee Roasters the owner wants to try, has tried, and wants to
@@ -38,15 +38,14 @@ V1 includes:
 
 V1 excludes:
 
-- Area Guides;
+- guide-style discovery pages;
 - Launch Areas;
 - Roast Quality Signals;
 - public editorial guide sections;
 - public ratings, rankings, reviews, or quality scores;
-- Visit Photos;
-- Suggestions;
-- roaster claim flows;
-- roaster dashboards;
+- media attachments;
+- community submissions;
+- roaster-operated workflows;
 - paid placement;
 - marketplace checkout;
 - map-first discovery;
@@ -62,8 +61,7 @@ derived from private tracking state and Visits. `Favorite`, `Not for me`, and
 personal views while preserving Visits and private notes.
 
 Use magic-link login for the first version. ADR 0006 remains the authentication
-stack decision. ADR 0025's email-and-password sign-in method is superseded by
-this decision.
+stack decision.
 
 ## Consequences
 
@@ -72,9 +70,9 @@ this decision.
   discovery strategy.
 - The admin surface is a practical owner curation form, not a moderation or
   claims workflow.
-- Visit Photos, Suggestions, guide pages, and richer public discovery can be
-  reconsidered later through new ADRs or PRDs.
+- Media attachments, community submissions, guide pages, and richer public
+  discovery can be reconsidered later through new ADRs or PRDs.
 - Existing architecture decisions still apply where they describe the stack,
   deployment, database, validation, testing tools, and operational boundaries.
-- Earlier feature-specific ADRs for Visit Photos, Suggestions, broad discovery,
-  and email/password sign-in are historical context, not active v1 scope.
+- Earlier feature-specific decisions for media attachments, community
+  submissions, broad discovery, and password sign-in are not active v1 scope.

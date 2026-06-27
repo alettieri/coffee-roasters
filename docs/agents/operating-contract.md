@@ -70,7 +70,7 @@ Domain modules must not depend on Vue, Nuxt, Nitro request events, or provider S
 
 ## Generated-file policy
 
-- Do not commit `.nuxt`, `.output`, coverage, Playwright reports, Wrangler local state, local R2 data, or secrets.
+- Do not commit `.nuxt`, `.output`, coverage, Playwright reports, Wrangler local state, or secrets.
 - Generated Cloudflare binding types must be reproducible through a documented command. Commit them only if the project deliberately chooses committed generated types.
 - Lockfiles and Drizzle migration metadata are committed.
 

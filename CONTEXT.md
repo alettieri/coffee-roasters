@@ -118,6 +118,6 @@ _Avoid_: Public review, testimonial
 - Removing a Coffee Roaster from active `My Roasters` archives it rather than
   deleting private history.
 - Visits are repeatable and private.
-- Visit Photos, Suggestions, roaster claims, public rankings, public reviews,
-  marketplace checkout, and Area Guides are future possibilities, not v1
-  scope.
+- Media attachments, community submissions, roaster-operated workflows,
+  public ranking or review systems, checkout, and guide-style discovery are
+  future possibilities, not v1 scope.

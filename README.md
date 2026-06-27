@@ -1,6 +1,7 @@
 # Coffee Roaster Discovery
 
-A California-focused Coffee Roaster discovery product with a private Journal for in-person Visits.
+A personal Coffee Roaster tracker with a small public Roaster Catalog, private
+`My Roasters` tracking, repeat Visits, and admin curation.
 
 ## Current state
 
@@ -92,7 +93,7 @@ Required GitHub production environment configuration:
 | `CLOUDFLARE_API_TOKEN`                  | Actions secret   | Least-privilege token for Wrangler direct upload.          |
 | `MIGRATION_DATABASE_URL`                | Actions secret   | Direct Neon connection used only by `pnpm db:migrate`.     |
 | `PRODUCTION_SMOKE_HEALTH_URL`           | Actions variable | Public or synthetic health-check URL.                      |
-| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | Actions variable | Public Discovery smoke-test URL with no private data.      |
+| `PRODUCTION_SMOKE_PUBLIC_CATALOG_URL`   | Actions variable | Public Roaster Catalog smoke-test URL with no private data. |
 
 The workflow records `APP_RELEASE` from the deployed commit SHA and passes that SHA to Wrangler as the Pages deployment commit hash. The upload command is shaped like:
 
@@ -100,7 +101,9 @@ The workflow records `APP_RELEASE` from the deployed commit SHA and passes that 
 pnpm exec wrangler pages deploy dist/ --project-name <production-pages-project> --branch main --commit-hash "$APP_RELEASE"
 ```
 
-Runtime traffic uses production Hyperdrive with a least-privilege application database role. The direct Neon migration credential must not be available to Pages runtime code. R2, Images, Queues, and Cron remain deferred until their product slices need them.
+Runtime traffic uses production Hyperdrive with a least-privilege application
+database role. The direct Neon migration credential must not be available to
+Pages runtime code.
 
 To pause or disable production deployment, disable the `Production Deploy` workflow in GitHub Actions or update the protected `production` environment so required reviewers do not approve deployment jobs. Do not remove pull request CI requirements to pause production deployment.
 

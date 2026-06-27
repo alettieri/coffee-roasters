@@ -93,8 +93,8 @@ Login as user -> add Roaster to My Roasters -> add repeat Visits
 - Preserve Visits and private notes when a Roaster is archived.
 - Keep Visit ratings private and personal.
 - Avoid public rankings, public reviews, quality scores, or star ratings.
-- Defer Area Guides, Visit Photos, Suggestions, roaster claim flows, public
-  editorial guides, paid placement, marketplace checkout, and map-first
+- Defer guide-style discovery, media attachments, community submissions,
+  roaster-operated workflows, paid placement, checkout, and map-first
   discovery.
 
 ## Data Contract
@@ -189,16 +189,15 @@ Permission rules:
 
 ## Out Of Scope
 
-- Area Guides.
+- Guide-style discovery pages.
 - Launch Areas.
 - Roast Quality Signals.
 - Public Signals beyond basic factual Roaster fields.
 - Public editorial notes.
 - Public ratings, rankings, reviews, or quality scores.
-- Visit Photos.
-- Suggestions.
-- Roaster claim flows.
-- Roaster dashboards.
+- Media attachments.
+- Community submissions.
+- Roaster-operated workflows.
 - Public user profiles or social feeds.
 - Marketplace checkout, fulfillment, subscriptions, tasting boxes, or
   payments.
@@ -210,8 +209,8 @@ Permission rules:
 ## Further Notes
 
 The first useful build should be intentionally small. Future versions may add
-photos, Suggestions, richer public discovery, guide pages, maps, or sharing
-only after the personal roaster tracker proves useful.
+media, community contributions, richer public discovery, maps, or sharing only
+after the personal roaster tracker proves useful.
 
 The current design spec is:
 

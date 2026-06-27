@@ -10,7 +10,9 @@ Accepted
 
 Application operations can fail for expected reasons such as invalid input, unauthenticated access, insufficient authorization, missing records, conflicting state, or domain-rule violations. Other failures—database outages, provider errors, programming defects, and violated assumptions—are unexpected and require operational attention.
 
-Treating every failure as an exception obscures normal control flow. Returning arbitrary messages from database or provider errors risks exposing implementation and private information to Local Coffee Lovers.
+Treating every failure as an exception obscures normal control flow. Returning
+arbitrary messages from database or provider errors risks exposing
+implementation and private information to Coffee Lovers.
 
 ## Decision
 

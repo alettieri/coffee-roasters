@@ -8,7 +8,8 @@ Accepted
 
 ## Context
 
-ADR 0003 originally selected Next.js App Router. Before implementation began, learning Vue and Nuxt became an explicit goal of this personal project.
+Before implementation began, learning Vue and Nuxt became an explicit goal of
+this personal project.
 
 V1 still requires public Roaster Catalog and Roaster Profile pages,
 authenticated `My Roasters` and Visit workflows, and a protected admin section.
@@ -28,8 +29,6 @@ The implementation will:
 - use Nuxt pages and middleware as presentation and navigation adapters;
 - use Nitro for server-side transport and runtime integration; and
 - keep domain rules independent of Vue, Nuxt, and Nitro types.
-
-This decision supersedes ADR 0003.
 
 ## Consequences
 

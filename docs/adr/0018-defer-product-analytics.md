@@ -8,7 +8,10 @@ Accepted
 
 ## Context
 
-The initial deployed product will have one Local Coffee Lover: the product owner. A dedicated product analytics platform would add client code, event design, consent and privacy considerations, operational configuration, and another external data store without materially improving decisions during this phase.
+The initial deployed product will have one Coffee Lover: the product owner. A
+dedicated product analytics platform would add client code, event design,
+consent and privacy considerations, operational configuration, and another
+external data store without materially improving decisions during this phase.
 
 Application errors and platform health are already covered by Sentry and Cloudflare native observability under ADR 0015.
 
@@ -22,9 +25,12 @@ During the single-user phase:
 - use privacy-safe operational telemetry only for reliability and diagnosis;
 - inspect application records through the protected admin interface or controlled database queries when necessary;
 - avoid implementing speculative analytics event infrastructure; and
-- keep private Journal content, search text, Visit Photo details, and authentication data out of operational telemetry.
+- keep private tracking notes, search text, Visit text, Visit Ratings, and
+  authentication data out of operational telemetry.
 
-Product analytics may be reconsidered when additional Local Coffee Lovers are invited and there is a concrete measurement question that cannot be answered through direct observation.
+Product analytics may be reconsidered when additional Coffee Lovers are invited
+and there is a concrete measurement question that cannot be answered through
+direct observation.
 
 ## Consequences
 

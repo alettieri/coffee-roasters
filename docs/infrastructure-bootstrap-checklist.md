@@ -19,8 +19,6 @@ explicit authorization and credentials.
       infrastructure until a specific issue authorizes them.
 - [ ] Maintain an inventory of Pages, Hyperdrive, Neon, domain, Resend,
       Sentry, and GitHub environment identifiers.
-- [ ] Add R2, Images, Queue, and Cron identifiers only when their
-      product slices authorize those resources.
 - [ ] Record region, purpose, owner, creation date, and deletion policy for each resource.
 
 ## Production deployment name contract
@@ -43,7 +41,7 @@ Record these names without values:
 | `APP_RELEASE`                           | GitHub Actions variable and Cloudflare Pages variable | deployment workflow and Pages runtime | Release identifier derived from the GitHub commit SHA.                             |
 | `PRODUCTION_URL`                        | GitHub Actions variable                               | smoke-test step                       | Canonical production origin.                                                       |
 | `PRODUCTION_SMOKE_HEALTH_URL`           | GitHub Actions variable                               | smoke-test step                       | Public or synthetic health-check URL.                                              |
-| `PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL` | GitHub Actions variable                               | smoke-test step                       | Public Discovery smoke-test URL that uses no private data.                         |
+| `PRODUCTION_SMOKE_PUBLIC_CATALOG_URL`   | GitHub Actions variable                               | smoke-test step                       | Public Roaster Catalog smoke-test URL that uses no private data.                   |
 
 ## Cloudflare
 
@@ -63,7 +61,6 @@ main --commit-hash "$APP_RELEASE"`.
       the Hyperdrive ID or connection string in the repository.
 - [ ] Record runtime application variable and secret names from the
       production deployment name contract without values.
-- [ ] Defer R2, Images, Queues, and Cron bindings until product slices authorize them.
 - [ ] Document how to pause or disable production deployment from GitHub Actions.
 - [ ] Document the Pages rollback path from production deployment history.
 - [ ] Confirm the external Pages project settings during provisioning
@@ -96,7 +93,7 @@ main --commit-hash "$APP_RELEASE"`.
       `PRODUCTION_HYPERDRIVE.connectionString`.
 - [ ] Define recovery-point and recovery-time objectives.
 - [ ] Confirm the available point-in-time restore window.
-- [ ] Restore into a separate branch and verify recovery before storing meaningful Journal data.
+- [ ] Restore into a separate branch and verify recovery before storing meaningful private tracking data.
 - [ ] Configure budget or usage alerts.
 
 ## Domain and email
@@ -129,5 +126,5 @@ main --commit-hash "$APP_RELEASE"`.
       checks and no private production data.
 - [ ] Document credential rotation and account-loss recovery.
 - [ ] Verify structured logs and sensitive-data redaction before authentication is deployed.
-- [ ] Add Sentry before private Journal data reaches production.
+- [ ] Add Sentry before private tracking data reaches production.
 - [ ] Review actual cost and usage after the first production month.

@@ -13,14 +13,11 @@ authenticated server operations, protected administration, and Neon
 connectivity in the Cloudflare deployment runtime.
 
 Nitro provides a `cloudflare_pages` preset, local Cloudflare emulation,
-and access to bindings through the request event. This removes the
-OpenNext compatibility layer required by the superseded Next.js
-deployment decision.
+and access to bindings through the request event.
 
 Issue #5 narrows initial deployment planning to production-only
-Cloudflare Pages delivery. Preview deployments, staging deployments,
-R2, Images, Queues, and Cron Triggers remain future product-slice work
-until an issue explicitly authorizes their infrastructure planning or
+Cloudflare Pages delivery. Preview and staging deployments remain future
+optional infrastructure until an issue explicitly authorizes their planning or
 provisioning.
 
 ## Decision
@@ -35,7 +32,6 @@ The implementation will:
 - use Worker-compatible libraries and web platform APIs where practical;
 - enable only required Node.js compatibility features;
 - connect to Neon through the production Hyperdrive binding under ADR 0036;
-- defer R2, Images, Queues, and Cron bindings until their product slices need them;
 - store runtime secrets through Cloudflare Pages production variables and secrets;
 - use a production Pages project and production branch;
 - treat previews as future optional infrastructure, not a required environment;
@@ -91,15 +87,12 @@ separate, explicit database restore plan when needed.
 
 Dependencies requiring unsupported native Node.js behavior must be replaced, isolated, or covered by a separate decision.
 
-This decision supersedes ADR 0008.
-
 ## Consequences
 
 - Nuxt has a direct Cloudflare deployment path without OpenNext.
 - Nitro provides one server runtime model for HTTP routes and Cloudflare bindings.
-- Runtime compatibility must still be tested for Better Auth, Drizzle,
-  Neon, and Sentry. R2, Images, Queues, and Cron compatibility return
-  when those product slices are implemented.
+- Runtime compatibility must still be tested for Better Auth, Drizzle, Neon,
+  Resend, and Sentry.
 - Local Nuxt success alone does not prove production compatibility.
 - Repository checks validate the application build and runtime seams,
   but Cloudflare Pages project settings, production variables, secrets,

@@ -1,6 +1,7 @@
 # Architectural Decision Index
 
-Read accepted ADRs as current policy. Superseded ADRs remain only to preserve decision history.
+Read accepted ADRs as current policy. Obsolete ADR files are removed when they
+would distract from the current system direction.
 
 ## Foundation and architecture
 
@@ -46,15 +47,3 @@ deployment decisions listed above.
 - ADR 0015: Sentry and Cloudflare observability
 - ADR 0016: GitHub Actions CI
 - ADR 0018: Defer product analytics
-
-## Superseded
-
-- ADR 0003: Next.js App Router — superseded by ADR 0021
-- ADR 0001: Private admin interface — superseded by ADR 0037 for v1 scope
-- ADR 0007: Private Visit Photos in R2 — superseded by ADR 0037 for v1 scope
-- ADR 0008: Next.js deployment through OpenNext — superseded by ADR 0022
-- ADR 0009: Cloudflare Images sanitization — superseded by ADR 0037 for v1 scope
-- ADR 0011: React shadcn/ui and Radix — superseded by ADR 0023
-- ADR 0014: Queues and Cron Triggers — superseded by ADR 0037 for v1 scope
-- ADR 0020: Next.js Server Actions — superseded by ADR 0024
-- ADR 0025: Closed email and password authentication — superseded by ADR 0037

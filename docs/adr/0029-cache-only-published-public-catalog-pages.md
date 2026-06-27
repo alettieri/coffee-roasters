@@ -1,4 +1,4 @@
-# ADR 0029: Cache Only Published Public Catalog Pages
+# ADR 0029: Cache Published Public Catalog Pages Only
 
 Date: June 20, 2026
 

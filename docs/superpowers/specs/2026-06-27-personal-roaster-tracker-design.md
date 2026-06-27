@@ -58,16 +58,15 @@ visible publicly.
 
 ## Out Of Scope
 
-- Area Guides.
+- Guide-style discovery pages.
 - Curated public guide sections such as `Visit in person`, `Buy beans`, or
   `Know the scene`.
 - Public editorial notes.
 - Public user ratings, rankings, reviews, or quality scores.
 - Public Visit data.
-- Visit Photos.
-- Suggestions.
-- Roaster claim flows.
-- Roaster dashboards.
+- Media attachments.
+- Community submissions.
+- Roaster-operated workflows.
 - Paid placement.
 - Marketplace checkout.
 - Map-first discovery.
@@ -373,4 +372,5 @@ The first implemented product should let the owner:
 - preserve Visits when a Roaster is archived from active personal tracking.
 
 The implementation should not add broader public discovery, editorial guide,
-review, marketplace, claim, Suggestion, or photo-management behavior.
+review, marketplace, roaster-operated, community-submission, or media-management
+behavior.

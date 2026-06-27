@@ -8,7 +8,8 @@ Accepted
 
 ## Context
 
-ADR 0011 selected the React implementations of shadcn/ui and Radix. ADR 0021 replaces React with Vue.
+ADR 0021 selects Vue and Nuxt, so the interface stack should use Vue-native
+component primitives.
 
 The application still needs locally owned, accessible, agent-readable component source. Reka UI is the Vue accessibility-primitives project formerly known as Radix Vue, and shadcn-vue provides open component source built for the Vue ecosystem.
 
@@ -24,8 +25,6 @@ The implementation will:
 - define shared design tokens;
 - build domain-specific components above the generic UI layer; and
 - keep domain rules and data access out of presentation components.
-
-This decision supersedes ADR 0011.
 
 ## Consequences
 

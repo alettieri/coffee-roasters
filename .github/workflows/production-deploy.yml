@@ -114,7 +114,7 @@ jobs:
       - name: Run production smoke checks
         run: |
           curl --fail --show-error --silent --location --max-time 20 "$PRODUCTION_SMOKE_HEALTH_URL" >/dev/null
-          curl --fail --show-error --silent --location --max-time 20 "$PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL" >/dev/null
+          curl --fail --show-error --silent --location --max-time 20 "$PRODUCTION_SMOKE_PUBLIC_CATALOG_URL" >/dev/null
         env:
           PRODUCTION_SMOKE_HEALTH_URL: ${{ vars.PRODUCTION_SMOKE_HEALTH_URL }}
-          PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL: ${{ vars.PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL }}
+          PRODUCTION_SMOKE_PUBLIC_CATALOG_URL: ${{ vars.PRODUCTION_SMOKE_PUBLIC_CATALOG_URL }}

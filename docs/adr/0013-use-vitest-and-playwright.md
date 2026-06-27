@@ -52,8 +52,7 @@ where needed, two-account privacy fixtures, and synthetic security fixtures.
 Critical privacy tests must verify access denial across different Coffee Lover
 accounts.
 
-Provider-sensitive acceptance should remain bounded and human-gated. No v1
-feature currently requires R2 or Cloudflare Images verification.
+Provider-sensitive acceptance should remain bounded and human-gated.
 
 ## Consequences
 
