@@ -26,7 +26,6 @@ The repository is in foundation setup. Product behavior is defined in `docs/coff
 - `pnpm typecheck` runs Nuxt's strict TypeScript check.
 - `pnpm test` runs the unit Vitest suite.
 - `pnpm test:unit` runs unit tests only.
-- `pnpm dev:acceptance` starts the local Nuxt server with `.env.test` loaded for browser acceptance testing.
 - `pnpm test:acceptance` runs the Chromium Playwright acceptance suite against the local Nuxt server.
 - `pnpm test:integration` runs database integration tests against local PostgreSQL.
 - `pnpm test:integration:ci` applies checked-in migrations and runs database integration tests against the PostgreSQL service supplied by CI.
@@ -47,7 +46,7 @@ Then run:
 pnpm test:acceptance
 ```
 
-The acceptance suite starts the app on `http://127.0.0.1:3000`, loads the checked-in `.env.test` local configuration through the repo helper script, and keeps browser reports and test artifacts out of version control.
+The acceptance suite uses the documented `@nuxt/test-utils/playwright` runner, starts the app on `http://127.0.0.1:3000`, loads the checked-in `.env.test` local configuration in the Playwright config, and keeps browser reports and test artifacts out of version control.
 
 ## Local database
 

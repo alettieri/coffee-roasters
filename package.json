@@ -17,7 +17,6 @@
     "db:start": "docker compose up -d --wait postgres",
     "db:stop": "docker compose down",
     "dev": "nuxt dev",
-    "dev:acceptance": "node --import tsx scripts/browser-acceptance/dev-server.ts",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "lint": "nuxt prepare && eslint .",
@@ -40,6 +39,7 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "1.16.0",
+    "@nuxt/test-utils": "4.0.3",
     "@playwright/test": "1.61.1",
     "@types/node": "26.0.0",
     "drizzle-kit": "0.31.10",

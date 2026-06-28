@@ -1,12 +1,13 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from '@nuxt/test-utils/playwright';
 
 test('renders the placeholder landing page and keeps browser state', async ({
   page,
   context,
+  goto,
 }) => {
   const baseURL = 'http://127.0.0.1:3000';
 
-  await page.goto('/');
+  await goto('/', { waitUntil: 'hydration' });
 
   await expect(
     page.getByRole('heading', {
