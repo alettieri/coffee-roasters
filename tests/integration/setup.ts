@@ -6,6 +6,12 @@ import {
   type DatabaseClient,
 } from '../../server/platform/database/client';
 import {
+  account,
+  session,
+  user,
+  verification,
+} from '../../server/platform/database/schema';
+import {
   loadEnvironmentFile,
   requireEnvironmentVariable,
 } from '../../scripts/environment/load-env-file';
@@ -28,24 +34,12 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  await client?.db.execute(sql`
-    do $$
-    declare
-      table_name text;
-    begin
-      foreach table_name in array array[
-        'integration_test_records',
-        'session',
-        'account',
-        'verification',
-        'user'
-      ] loop
-        if to_regclass('public.' || table_name) is not null then
-          execute format('truncate table %I restart identity cascade', table_name);
-        end if;
-      end loop;
-    end $$;
-  `);
+  await client?.db.execute(
+    sql`truncate table ${account}, ${session}, ${verification}, ${user} restart identity cascade`,
+  );
+  await client?.db.execute(
+    sql`truncate table "integration_test_records" restart identity cascade`,
+  );
 });
 
 afterAll(async () => {
