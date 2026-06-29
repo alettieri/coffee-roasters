@@ -30,10 +30,20 @@ beforeAll(async () => {
 beforeEach(async () => {
   await client?.db.execute(sql`
     do $$
+    declare
+      table_name text;
     begin
-      if to_regclass('public.integration_test_records') is not null then
-        truncate table integration_test_records;
-      end if;
+      foreach table_name in array array[
+        'integration_test_records',
+        'session',
+        'account',
+        'verification',
+        'user'
+      ] loop
+        if to_regclass('public.' || table_name) is not null then
+          execute format('truncate table %I restart identity cascade', table_name);
+        end if;
+      end loop;
     end $$;
   `);
 });
