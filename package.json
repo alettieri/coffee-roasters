@@ -23,6 +23,7 @@
     "lint:fix": "nuxt prepare && eslint . --fix",
     "postinstall": "nuxt prepare",
     "test": "pnpm test:unit",
+    "test:acceptance": "playwright test",
     "test:integration": "pnpm db:integration:reset && pnpm db:migrate:integration && env -u DATABASE_URL -u MIGRATION_DATABASE_URL ENV_FILE=.env.test vitest run --config vitest.integration.config.ts",
     "test:integration:ci": "pnpm db:migrate && vitest run --config vitest.integration.config.ts",
     "test:unit": "vitest run tests/unit",
@@ -38,6 +39,8 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "1.16.0",
+    "@nuxt/test-utils": "4.0.3",
+    "@playwright/test": "1.61.1",
     "@types/node": "26.0.0",
     "drizzle-kit": "0.31.10",
     "eslint": "10.5.0",
