@@ -21,49 +21,6 @@ export interface CreateAppAuthOptions {
   sendMagicLink?: (link: CapturedMagicLink) => Promise<void>;
 }
 
-export interface AppAuthUser {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  email: string;
-  emailVerified: boolean;
-  name: string;
-  image?: string | null;
-  role: 'coffee_lover' | 'admin' | string;
-}
-
-export interface AppAuthSession {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  userId: string;
-  expiresAt: Date;
-  token: string;
-  ipAddress?: string | null;
-  userAgent?: string | null;
-}
-
-export interface AppAuthSessionResult {
-  user: AppAuthUser;
-  session: AppAuthSession;
-}
-
-export interface AppAuth {
-  handler(request: Request): Promise<Response>;
-  api: {
-    getSession(context: {
-      headers: Headers;
-      query?: {
-        disableCookieCache?: boolean;
-        disableRefresh?: boolean;
-      };
-    }): Promise<AppAuthSessionResult | null>;
-  };
-}
-
-const runtimeAuthCache = new Map<string, AppAuth>();
-const runtimeDatabaseClientCache = new Map<string, DatabaseClient>();
-
 function createAuthInstance({
   db,
   baseURL,
@@ -72,7 +29,7 @@ function createAuthInstance({
   sendMagicLink = async (link) => {
     captureMagicLink(link);
   },
-}: CreateAppAuthOptions): AppAuth {
+}: CreateAppAuthOptions) {
   const resolvedRuntimeAuthConfig =
     runtimeAuthConfig ?? resolveBetterAuthRuntimeConfiguration();
 
@@ -101,6 +58,16 @@ function createAuthInstance({
     ],
   });
 }
+
+export type AppAuth = ReturnType<typeof createAuthInstance>;
+export type AppAuthSessionResult = Awaited<
+  ReturnType<AppAuth['api']['getSession']>
+>;
+export type AppAuthUser = NonNullable<AppAuthSessionResult>['user'];
+export type AppAuthSession = NonNullable<AppAuthSessionResult>['session'];
+
+const runtimeAuthCache = new Map<string, AppAuth>();
+const runtimeDatabaseClientCache = new Map<string, DatabaseClient>();
 
 export function createAppAuth(options: CreateAppAuthOptions): AppAuth {
   return createAuthInstance(options);
