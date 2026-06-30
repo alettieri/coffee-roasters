@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { createAuthClient } from 'better-auth/vue';
-
 const { data: session, refresh } = useAuthSession();
-const signOutPending = ref(false);
-const authBaseURL = new URL('/api/auth', useRequestURL().origin).toString();
-const authClient = createAuthClient({
-  baseURL: authBaseURL,
-});
+const signOutMutation = useSignOutMutation();
+const signOutPending = computed(() => signOutMutation.isPending.value);
 
 const signedInUser = computed(() => session.value?.user);
 const sessionLabel = computed(() => {
@@ -22,14 +17,12 @@ async function signOut() {
     return;
   }
 
-  signOutPending.value = true;
-
   try {
-    await authClient.signOut();
+    await signOutMutation.mutateAsync();
     await refresh();
     await navigateTo('/sign-in');
-  } finally {
-    signOutPending.value = false;
+  } catch {
+    return;
   }
 }
 </script>

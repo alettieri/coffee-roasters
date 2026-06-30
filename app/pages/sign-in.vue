@@ -1,34 +1,27 @@
 <script setup lang="ts">
 const email = ref('');
-const submissionState = ref<'idle' | 'sending' | 'sent' | 'error'>('idle');
 const feedbackMessage = ref('');
 const formError = ref('');
-
 const { data: session } = useAuthSession();
+const requestMagicLinkMutation = useRequestMagicLinkMutation();
+const requestMagicLinkPending = computed(
+  () => requestMagicLinkMutation.isPending.value,
+);
 
 async function submitMagicLink() {
-  if (!email.value || submissionState.value === 'sending') {
+  if (!email.value || requestMagicLinkPending.value) {
     return;
   }
 
-  submissionState.value = 'sending';
   feedbackMessage.value = '';
   formError.value = '';
 
   try {
-    await $fetch('/api/auth/sign-in/magic-link', {
-      body: {
-        email: email.value,
-      },
-      method: 'POST',
-    });
-
+    await requestMagicLinkMutation.mutateAsync(email.value);
     feedbackMessage.value = `Magic link requested for ${email.value}.`;
-    submissionState.value = 'sent';
   } catch {
     formError.value =
       'Could not start login. Try again with a valid email address.';
-    submissionState.value = 'error';
   }
 }
 </script>
@@ -57,8 +50,8 @@ async function submitMagicLink() {
           type="email"
         />
 
-        <button :disabled="submissionState === 'sending'" type="submit">
-          {{ submissionState === 'sending' ? 'Sending...' : 'Send magic link' }}
+        <button :disabled="requestMagicLinkPending" type="submit">
+          {{ requestMagicLinkPending ? 'Sending...' : 'Send magic link' }}
         </button>
       </form>
 

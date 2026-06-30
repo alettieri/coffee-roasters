@@ -15,6 +15,12 @@ export interface AuthSessionState {
   } | null;
 }
 
+export const defaultAuthSessionState: AuthSessionState = {
+  authenticated: false,
+  session: null,
+  user: null,
+};
+
 export async function fetchAuthSession(
   headers?: HeadersInit,
 ): Promise<AuthSessionState> {
@@ -28,11 +34,11 @@ export function useAuthSession() {
     ? useRequestHeaders(['cookie'])
     : undefined;
 
-  return useAsyncData('current-session', () => fetchAuthSession(headers), {
-    default: () => ({
-      authenticated: false,
-      session: null,
-      user: null,
-    }),
-  });
+  return useAsyncData<AuthSessionState>(
+    'auth-session',
+    () => fetchAuthSession(headers),
+    {
+      default: () => defaultAuthSessionState,
+    },
+  );
 }
