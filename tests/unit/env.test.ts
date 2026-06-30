@@ -2,7 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { ZodError } from 'zod';
 
 import {
+  parseBetterAuthEnvironment,
   parseServerEnvironment,
+  resolveBetterAuthRuntimeConfiguration,
   resolveProductionDatabaseConnectionString,
   resolveRuntimeDatabaseConnectionString,
 } from '../../server/platform/env';
@@ -40,6 +42,137 @@ describe('server environment validation', () => {
     ['non-Postgres DATABASE_URL', { DATABASE_URL: databaseUrl('https') }],
   ])('rejects %s', (_caseName, source) => {
     expect(() => parseServerEnvironment(source)).toThrow(ZodError);
+  });
+});
+
+describe('better auth environment validation', () => {
+  it('accepts the runtime auth url and secret when they are configured', () => {
+    expect(
+      parseBetterAuthEnvironment({
+        BETTER_AUTH_URL: 'http://localhost:3000',
+        BETTER_AUTH_SECRET:
+          'coffee-roasters-local-test-better-auth-secret-32-plus',
+      }),
+    ).toEqual({
+      BETTER_AUTH_URL: 'http://localhost:3000',
+      BETTER_AUTH_SECRET:
+        'coffee-roasters-local-test-better-auth-secret-32-plus',
+    });
+  });
+
+  it.each([
+    [
+      'missing BETTER_AUTH_URL',
+      {
+        BETTER_AUTH_SECRET:
+          'coffee-roasters-local-test-better-auth-secret-32-plus',
+      },
+    ],
+    [
+      'missing BETTER_AUTH_SECRET',
+      { BETTER_AUTH_URL: 'http://localhost:3000' },
+    ],
+    [
+      'short BETTER_AUTH_SECRET',
+      {
+        BETTER_AUTH_URL: 'http://localhost:3000',
+        BETTER_AUTH_SECRET: 'short-secret',
+      },
+    ],
+  ])('rejects %s', (_caseName, source) => {
+    expect(() => parseBetterAuthEnvironment(source)).toThrow();
+  });
+
+  it('resolves the validated Better Auth runtime configuration', () => {
+    expect(
+      resolveBetterAuthRuntimeConfiguration(undefined, {
+        BETTER_AUTH_URL: 'http://localhost:3000',
+        BETTER_AUTH_SECRET:
+          'coffee-roasters-local-test-better-auth-secret-32-plus',
+      }),
+    ).toEqual({
+      BETTER_AUTH_URL: 'http://localhost:3000',
+      BETTER_AUTH_SECRET:
+        'coffee-roasters-local-test-better-auth-secret-32-plus',
+    });
+  });
+
+  it('prefers Cloudflare runtime auth bindings when process.env is missing the Better Auth configuration', () => {
+    expect(
+      resolveBetterAuthRuntimeConfiguration(
+        {
+          context: {
+            _platform: {
+              cloudflare: {
+                env: {
+                  BETTER_AUTH_URL: 'https://example.com',
+                  BETTER_AUTH_SECRET:
+                    'cloudflare-runtime-better-auth-secret-32-plus',
+                },
+              },
+            },
+          },
+        },
+        {},
+      ),
+    ).toEqual({
+      BETTER_AUTH_URL: 'https://example.com',
+      BETTER_AUTH_SECRET: 'cloudflare-runtime-better-auth-secret-32-plus',
+    });
+  });
+
+  it('does not fall back to process.env for production Cloudflare runtime auth bindings', () => {
+    expect(() =>
+      resolveBetterAuthRuntimeConfiguration(
+        {
+          context: {
+            _platform: {
+              cloudflare: {
+                env: {
+                  APP_ENV: 'production',
+                },
+              },
+            },
+          },
+        },
+        {
+          BETTER_AUTH_URL: 'http://localhost:3000',
+          BETTER_AUTH_SECRET:
+            'coffee-roasters-local-test-better-auth-secret-32-plus',
+        },
+      ),
+    ).toThrow(
+      'Cloudflare Pages production runtime requires the BETTER_AUTH_URL and BETTER_AUTH_SECRET bindings.',
+    );
+  });
+
+  it('uses Cloudflare runtime auth bindings ahead of conflicting process.env values', () => {
+    expect(
+      resolveBetterAuthRuntimeConfiguration(
+        {
+          context: {
+            _platform: {
+              cloudflare: {
+                env: {
+                  APP_ENV: 'production',
+                  BETTER_AUTH_URL: 'https://example.com',
+                  BETTER_AUTH_SECRET:
+                    'cloudflare-runtime-better-auth-secret-32-plus',
+                },
+              },
+            },
+          },
+        },
+        {
+          BETTER_AUTH_URL: 'http://localhost:3000',
+          BETTER_AUTH_SECRET:
+            'coffee-roasters-local-test-better-auth-secret-32-plus',
+        },
+      ),
+    ).toEqual({
+      BETTER_AUTH_URL: 'https://example.com',
+      BETTER_AUTH_SECRET: 'cloudflare-runtime-better-auth-secret-32-plus',
+    });
   });
 });
 
