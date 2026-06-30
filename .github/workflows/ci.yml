@@ -44,6 +44,7 @@ jobs:
       MIGRATION_DATABASE_URL: postgres://coffee_roasters_integration:coffee_roasters_integration@127.0.0.1:5432/coffee_roasters_test
       BETTER_AUTH_URL: http://localhost:3000
       BETTER_AUTH_SECRET: coffee-roasters-local-test-better-auth-secret-32-plus
+      TEST_ONLY_CAPTURE_SECRET: coffee-roasters-local-test-captured-magic-links-secret
     steps:
       - name: Check out repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
