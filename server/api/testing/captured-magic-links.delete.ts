@@ -1,20 +1,15 @@
-import { createError, defineEventHandler } from 'h3';
+import { defineEventHandler, getHeader } from 'h3';
 
 import { resetCapturedMagicLinks } from '../../platform/auth/magic-link-capture';
+import {
+  capturedMagicLinksTestHeaderName,
+  requireCapturedMagicLinksBridgeAccess,
+} from '../../platform/testing/captured-magic-links-access';
 
-function ensureTestEnvironment() {
-  if (process.env.APP_ENV === 'test' || process.env.NODE_ENV === 'test') {
-    return;
-  }
-
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Not found',
-  });
-}
-
-export default defineEventHandler(() => {
-  ensureTestEnvironment();
+export default defineEventHandler((event) => {
+  requireCapturedMagicLinksBridgeAccess(
+    getHeader(event, capturedMagicLinksTestHeaderName),
+  );
   resetCapturedMagicLinks();
 
   return {

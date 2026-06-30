@@ -3,6 +3,7 @@ import type { Page } from '@playwright/test';
 import { expect, test } from '@nuxt/test-utils/playwright';
 
 import { createDatabaseClient } from '../../server/platform/database/client';
+import { capturedMagicLinksTestHeaderName } from '../../server/platform/testing/captured-magic-links-access';
 import {
   account,
   session,
@@ -13,8 +14,14 @@ import type { CapturedMagicLink } from '../../server/platform/auth/magic-link-ca
 import { requireEnvironmentVariable } from '../../scripts/environment/load-env-file';
 
 const databaseUrl = requireEnvironmentVariable('DATABASE_URL');
+const testOnlyCapturedMagicLinksSecret = requireEnvironmentVariable(
+  'TEST_ONLY_CAPTURE_SECRET',
+);
 const databaseClient = createDatabaseClient(databaseUrl, { maxConnections: 1 });
 const coffeeLoverEmail = 'browser-coffee-lover@example.com';
+const capturedMagicLinksHeaders = {
+  [capturedMagicLinksTestHeaderName]: testOnlyCapturedMagicLinksSecret,
+};
 
 async function resetAuthState() {
   await databaseClient.db.execute(
@@ -36,7 +43,9 @@ async function requestMagicLink(page: Page) {
 }
 
 async function getCapturedMagicLinks(page: Page): Promise<CapturedMagicLink[]> {
-  const response = await page.request.get('/api/testing/captured-magic-links');
+  const response = await page.request.get('/api/testing/captured-magic-links', {
+    headers: capturedMagicLinksHeaders,
+  });
 
   expect(response.ok()).toBe(true);
 
@@ -54,7 +63,9 @@ async function completeCapturedMagicLink(page: Page) {
 
 test.beforeEach(async ({ page }) => {
   await resetAuthState();
-  await page.request.delete('/api/testing/captured-magic-links');
+  await page.request.delete('/api/testing/captured-magic-links', {
+    headers: capturedMagicLinksHeaders,
+  });
 });
 
 test.afterAll(async () => {
