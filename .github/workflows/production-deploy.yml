@@ -66,6 +66,8 @@ jobs:
           require_config CLOUDFLARE_PAGES_PROJECT_NAME
           require_config CLOUDFLARE_API_TOKEN
           require_config MIGRATION_DATABASE_URL
+          require_config PRODUCTION_SMOKE_HEALTH_URL
+          require_config PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL
 
           if [ "$missing" -ne 0 ]; then
             exit 1
@@ -75,6 +77,8 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_PAGES_PROJECT_NAME: ${{ vars.CLOUDFLARE_PAGES_PROJECT_NAME }}
           MIGRATION_DATABASE_URL: ${{ secrets.MIGRATION_DATABASE_URL }}
+          PRODUCTION_SMOKE_HEALTH_URL: ${{ vars.PRODUCTION_SMOKE_HEALTH_URL }}
+          PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL: ${{ vars.PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@7088e561eb65bb68695d245aa206f005ef30921d
@@ -114,7 +118,7 @@ jobs:
       - name: Run production smoke checks
         run: |
           curl --fail --show-error --silent --location --max-time 20 "$PRODUCTION_SMOKE_HEALTH_URL" >/dev/null
-          curl --fail --show-error --silent --location --max-time 20 "$PRODUCTION_SMOKE_PUBLIC_CATALOG_URL" >/dev/null
+          curl --fail --show-error --silent --location --max-time 20 "$PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL" >/dev/null
         env:
           PRODUCTION_SMOKE_HEALTH_URL: ${{ vars.PRODUCTION_SMOKE_HEALTH_URL }}
-          PRODUCTION_SMOKE_PUBLIC_CATALOG_URL: ${{ vars.PRODUCTION_SMOKE_PUBLIC_CATALOG_URL }}
+          PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL: ${{ vars.PRODUCTION_SMOKE_PUBLIC_DISCOVERY_URL }}
