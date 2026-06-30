@@ -5,3 +5,11 @@ name = "coffee-roasters"
 compatibility_date = "2026-06-23"
 compatibility_flags = ["nodejs_compat", "no_nodejs_compat_v2"]
 pages_build_output_dir = "dist"
+
+[env.production.vars]
+APP_ENV = "production"
+BETTER_AUTH_URL = "https://coffee-roasters.pages.dev"
+
+[[env.production.hyperdrive]]
+binding = "PRODUCTION_HYPERDRIVE"
+id = "coffee-roasters-production"
