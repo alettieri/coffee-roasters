@@ -12,4 +12,4 @@ BETTER_AUTH_URL = "https://coffee-roasters.pages.dev"
 
 [[env.production.hyperdrive]]
 binding = "PRODUCTION_HYPERDRIVE"
-id = "coffee-roasters-production"
+id = "592a32d6183f461c9d531eb3d990918e"
