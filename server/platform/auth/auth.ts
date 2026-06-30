@@ -21,6 +21,33 @@ export interface CreateAppAuthOptions {
   sendMagicLink?: (link: CapturedMagicLink) => Promise<void>;
 }
 
+export interface AppAuthUser {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  image?: string | null;
+  role: 'coffee_lover' | 'admin' | string;
+}
+
+export interface AppAuthSession {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  expiresAt: Date;
+  token: string;
+  ipAddress?: string | null;
+  userAgent?: string | null;
+}
+
+export interface AppAuthSessionResult {
+  user: AppAuthUser;
+  session: AppAuthSession;
+}
+
 export interface AppAuth {
   handler(request: Request): Promise<Response>;
   api: {
@@ -30,28 +57,7 @@ export interface AppAuth {
         disableCookieCache?: boolean;
         disableRefresh?: boolean;
       };
-    }): Promise<{
-      user: {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        email: string;
-        emailVerified: boolean;
-        name: string;
-        image?: string | null;
-        role: 'coffee_lover' | 'admin' | string;
-      };
-      session: {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string;
-        expiresAt: Date;
-        token: string;
-        ipAddress?: string | null;
-        userAgent?: string | null;
-      };
-    } | null>;
+    }): Promise<AppAuthSessionResult | null>;
   };
 }
 

@@ -1,3 +1,9 @@
+import type {
+  AppAuthSession,
+  AppAuthSessionResult,
+  AppAuthUser,
+} from '../../platform/auth/auth';
+
 export interface AuthSessionReader {
   api: {
     getSession(context: {
@@ -6,45 +12,19 @@ export interface AuthSessionReader {
         disableCookieCache?: boolean;
         disableRefresh?: boolean;
       };
-    }): Promise<{
-      user: {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        email: string;
-        emailVerified: boolean;
-        image?: string | null;
-        name: string;
-        role: 'coffee_lover' | 'admin' | string;
-      };
-      session: {
-        id: string;
-        createdAt: Date;
-        updatedAt: Date;
-        userId: string;
-        expiresAt: Date;
-        token: string;
-        ipAddress?: string | null;
-        userAgent?: string | null;
-      };
-    } | null>;
+    }): Promise<AppAuthSessionResult | null>;
   };
 }
 
-export interface AuthenticatedActorUser {
-  id: string;
-  email: string;
-  emailVerified: boolean;
-  image: string | null | undefined;
-  name: string;
-  role: 'coffee_lover' | 'admin' | string;
-}
+export type AuthenticatedActorUser = Pick<
+  AppAuthUser,
+  'id' | 'email' | 'emailVerified' | 'image' | 'name' | 'role'
+>;
 
-export interface AuthenticatedActorSession {
-  id: string;
-  expiresAt: Date;
-  userId: string;
-}
+export type AuthenticatedActorSession = Pick<
+  AppAuthSession,
+  'id' | 'expiresAt' | 'userId'
+>;
 
 export interface AuthenticatedActor {
   user: AuthenticatedActorUser;
@@ -61,11 +41,6 @@ export class UnauthenticatedActorError extends Error {
   }
 }
 
-type AuthSessionResult = {
-  user?: AuthenticatedActorUser;
-  session?: AuthenticatedActorSession & { token?: string };
-} | null;
-
 function toHeaders(init?: Headers | HeadersInit): Headers {
   return init instanceof Headers ? init : new Headers(init);
 }
@@ -74,12 +49,12 @@ export async function getAuthenticatedActor(
   auth: AuthSessionReader,
   headers: Headers | HeadersInit,
 ): Promise<AuthenticatedActor | null> {
-  const session = (await auth.api.getSession({
+  const session = await auth.api.getSession({
     headers: toHeaders(headers),
     query: {
       disableRefresh: true,
     },
-  })) as AuthSessionResult;
+  });
 
   if (!session?.user || !session.session) {
     return null;
