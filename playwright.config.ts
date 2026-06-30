@@ -6,6 +6,7 @@ import type { ConfigOptions } from '@nuxt/test-utils/playwright';
 import { loadEnvironmentFile } from './scripts/environment/load-env-file';
 
 const baseURL = 'http://127.0.0.1:3000';
+const skipWebServer = process.env.SKIP_PLAYWRIGHT_WEB_SERVER === '1';
 
 loadEnvironmentFile('.env.test');
 
@@ -27,16 +28,22 @@ export default defineConfig<ConfigOptions>({
       },
     },
   ],
-  webServer: {
-    command: 'pnpm exec nuxt dev --dotenv=.env.test --port=3000 --host',
-    env: {
-      DATABASE_URL: process.env.DATABASE_URL,
-      MIGRATION_DATABASE_URL: process.env.MIGRATION_DATABASE_URL,
-      HOST: '127.0.0.1',
-      PORT: '3000',
-    },
-    reuseExistingServer: !process.env.CI,
-    timeout: 120_000,
-    url: baseURL,
-  },
+  ...(skipWebServer
+    ? {}
+    : {
+        webServer: {
+          command: 'pnpm exec nuxt dev --dotenv=.env.test --port=3000 --host',
+          env: {
+            DATABASE_URL: process.env.DATABASE_URL,
+            MIGRATION_DATABASE_URL: process.env.MIGRATION_DATABASE_URL,
+            APP_ENV: 'test',
+            NUXT_IGNORE_LOCK: '1',
+            HOST: '127.0.0.1',
+            PORT: '3000',
+          },
+          reuseExistingServer: !process.env.CI,
+          timeout: 120_000,
+          url: baseURL,
+        },
+      }),
 });
