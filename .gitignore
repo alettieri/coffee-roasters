@@ -126,3 +126,4 @@ blob-report/
 
 # Agent state files
 .agent
+.h-test
